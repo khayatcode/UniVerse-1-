@@ -47,7 +47,6 @@ def create_post():
     }
     print("data is", data)
     post = Post.save(data)
-    print("data is", data)
     return jsonify(post), 201
 
 # update a post

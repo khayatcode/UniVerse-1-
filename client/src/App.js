@@ -1,13 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
+import Reg from './components/Reg';
 
 function App() {
   // I want to see if my python back end is sending data to my react front end
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/get_one_post/2')
+    fetch('http://127.0.0.1:5000/get_all_posts')
       .then(res => res.json())
       .then(res => {
         setData(res.data);
@@ -23,8 +23,7 @@ function App() {
 
   return (
     <div className="App">
-
-      
+      <Reg/>
     </div>
   );
 }

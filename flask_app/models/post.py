@@ -87,7 +87,7 @@ class Post(BaseModel):
             "id": results[0]['id'],
             "content": results[0]['content'],
             "likes": results[0]['likes'],
-            "user_id": results[0]['user_id'],
+            "user_id": results[0]['user_id']
         }
         print("post_data: ", post_data)
         return post_data

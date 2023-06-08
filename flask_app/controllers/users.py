@@ -10,29 +10,29 @@ bcrypt = Bcrypt(app)
 
 @app.route('/register', methods=['POST'])
 def register():
-    if not User.validate_register(request.form):
+    if not User.validate_user(request.json):
         return jsonify({'message': 'Invalid registration data'}), 400
-    pw_hash = bcrypt.generate_password_hash(request.form['password'])
+    pw_hash = bcrypt.generate_password_hash(request.json['password'])
     data = {
-        "first_name": request.form['first_name'],
-        "last_name": request.form['last_name'],
-        "user_name": request.form['username'],
-        "location": request.form['location'],
-        "occupation": request.form['occupation'],
-        "email": request.form['email'],
+        "first_name": request.json['first_name'],
+        "last_name": request.json['last_name'],
+        "user_name": request.json['user_name'],
+        "location": request.json['location'],
+        "occupation": request.json['occupation'],
+        "email": request.json['email'],
         "password" : pw_hash
     }
+    print("data is", data)
     user = User.save(data)
-    session['user_id'] = user
-    return jsonify(user.to_jason()), 200
+    return jsonify(user), 200
 
 @app.route('/login', methods=['POST'])
 def login():
-    data = {"email": request.form['email']}
+    data = {"email": request.json['email']}
     user_in_db = User.get_by_email(data)
     if not user_in_db:
         return jsonify({'message': 'Email not found'}), 400
-    if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
+    if not bcrypt.check_password_hash(user_in_db.password, request.json['password']):
         return jsonify({'message': 'Incorrect password'}), 400
     session['user_id'] = user_in_db.id
     return jsonify(user_in_db.to_json()), 200

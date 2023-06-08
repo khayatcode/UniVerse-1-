@@ -66,27 +66,35 @@ class User:
     def validate_user(user):
         is_valid = True
         if len(user['first_name']) < 2:
+            print("First name must be at least 2 characters.")
             flash("First name must be at least 2 characters.")
             is_valid = False
         if len(user['last_name']) < 2:
+            print("Last name must be at least 2 characters.")
             flash("Last name must be at least 2 characters.")
             is_valid = False
         if len(user['user_name']) < 2:
+            print("Username must be at least 2 characters.")
             flash("Username must be at least 2 characters.")
             is_valid = False
         if len(user['location']) < 2:
+            print("Location must be at least 2 characters.")
             flash("Location must be at least 2 characters.")
             is_valid = False
         if len(user['occupation']) < 2:
+            print("occupation must be at least 2 characters.")
             flash("occupation must be at least 2 characters.")
             is_valid = False
         if not EMAIL_REGEX.match(user['email']):
+            print("Invalid email address!")
             flash("Invalid email address!")
             is_valid = False
         if not password_regex.match(user['password']):
+            print("Password must be at least 8 characters, have one capital letter and one number.")
             flash("Password must be at least 8 characters, have one capital letter and one number.")
             is_valid = False
         if user['password'] != user['confirm_password']:
+            print("Passwords do not match!")
             flash("Passwords do not match!")
             is_valid = False
         return is_valid
