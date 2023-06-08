@@ -7,8 +7,6 @@ from flask_app.models.comment import Comment
 from flask_bcrypt import Bcrypt        
 bcrypt = Bcrypt(app)
 
-from flask_cors import CORS
-CORS(app, support_credentials=True)
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -18,7 +16,7 @@ def register():
     data = {
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
-        "username": request.form['username'],
+        "user_name": request.form['username'],
         "location": request.form['location'],
         "occupation": request.form['occupation'],
         "email": request.form['email'],

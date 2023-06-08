@@ -1,11 +1,16 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 # model the class after the user table from our database
 from flask import flash
+import datetime
 
 from flask_app.models.user import User
+from flask_app.models.base_model import BaseModel
 
-class Post:
+class Post(BaseModel):
+    
     DB = "UniVerse"
+    
+    json_fields = ['id', 'content', 'likes', 'user_id']
     def __init__( self , data ):
         self.id = data['id']
         self.content = data['content']
@@ -18,14 +23,32 @@ class Post:
     # save post
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO posts (content, likes, user_id) VALUES (%(content)s, %(likes)s, %(user_id)s);"
-        return connectToMySQL(cls.DB).query_db(query, data)
+        query = "INSERT INTO posts (content, likes, user_id, created_at, updated_at) VALUES (%(content)s, %(likes)s, %(user_id)s, NOW(), NOW());"
+        result = connectToMySQL(cls.DB).query_db(query, data)
+        print("result: ", result)
+        post_data = {
+            "id": result,
+            "content": data['content'],
+            "likes": data['likes'],
+            "user_id": data['user_id'],
+        }
+        print("post_data: ", post_data)
+        return post_data
     
     # UPDATE post
     @classmethod
     def update(cls, data):
         query = "UPDATE posts SET content = %(content)s, likes = %(likes)s WHERE id = %(id)s;"
-        return connectToMySQL(cls.DB).query_db(query, data)
+        result = connectToMySQL(cls.DB).query_db(query, data)
+        print("result: ", result)
+        post_data = {
+            "id": data['id'],
+            "content": data['content'],
+            "likes": data['likes'],
+            "user_id": data['user_id']
+        }
+        print("post_data: ", post_data)
+        return post_data
     
     # update likes
     def update_likes(self):
@@ -59,7 +82,15 @@ class Post:
     def get_one(cls, data):
         query = "SELECT * FROM posts WHERE id = %(id)s;"
         results = connectToMySQL(cls.DB).query_db(query, data)
-        return cls(results[0])
+        print("results: ", results)
+        post_data = {
+            "id": results[0]['id'],
+            "content": results[0]['content'],
+            "likes": results[0]['likes'],
+            "user_id": results[0]['user_id'],
+        }
+        print("post_data: ", post_data)
+        return post_data
     
     # delete post
     @classmethod

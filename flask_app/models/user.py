@@ -13,9 +13,9 @@ class User:
         self.id = data['id']
         self.first_name = data['first_name']
         self.last_name = data['last_name']
-        self.username = data['username']
+        self.user_name = data['user_name']
         self.location = data['location']
-        self.ocuppation = data['ocuppation']
+        self.occupation = data['occupation']
         self.email = data['email']
         self.password = data['password']
         self.created_at = data['created_at']
@@ -50,7 +50,7 @@ class User:
     # save user
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO users (first_name, last_name, username, location, ocuppation, email, password) VALUES (%(first_name)s, %(last_name)s, %(username)s, %(location)s, %(ocuppation)s, %(email)s, %(password)s);"
+        query = "INSERT INTO users (first_name, last_name, user_name, location, occupation, email, password) VALUES (%(first_name)s, %(last_name)s, %(user_name)s, %(location)s, %(occupation)s, %(email)s, %(password)s);"
         return connectToMySQL(cls.DB).query_db(query, data)
     
     # get all users friends
@@ -71,14 +71,14 @@ class User:
         if len(user['last_name']) < 2:
             flash("Last name must be at least 2 characters.")
             is_valid = False
-        if len(user['username']) < 2:
+        if len(user['user_name']) < 2:
             flash("Username must be at least 2 characters.")
             is_valid = False
         if len(user['location']) < 2:
             flash("Location must be at least 2 characters.")
             is_valid = False
-        if len(user['ocuppation']) < 2:
-            flash("Ocuppation must be at least 2 characters.")
+        if len(user['occupation']) < 2:
+            flash("occupation must be at least 2 characters.")
             is_valid = False
         if not EMAIL_REGEX.match(user['email']):
             flash("Invalid email address!")
