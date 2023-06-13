@@ -4,8 +4,9 @@ from flask import flash
 
 from flask_app.models.user import User
 from flask_app.models.post import Post
+from flask_app.models.base_model import BaseModel
 
-class Comment:
+class Comment(BaseModel):
     DB = "UniVerse"
     def __init__( self , data ):
         self.id = data['id']

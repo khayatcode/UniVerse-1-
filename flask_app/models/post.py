@@ -2,6 +2,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 # model the class after the user table from our database
 from flask import flash
 import datetime
+import json
 
 from flask_app.models.user import User
 from flask_app.models.base_model import BaseModel
@@ -9,8 +10,8 @@ from flask_app.models.base_model import BaseModel
 class Post(BaseModel):
     
     DB = "UniVerse"
-    
-    json_fields = ['id', 'content', 'likes', 'user_id']
+
+    json_fields = ['id', 'content', 'likes', 'user_id', 'created_at', 'updated_at', 'creator']
     def __init__( self , data ):
         self.id = data['id']
         self.content = data['content']
@@ -19,7 +20,17 @@ class Post(BaseModel):
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.creator = None
-        
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "likes": self.likes,
+            "user_id": self.user_id,
+            "creator": self.creator,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
     # save post
     @classmethod
     def save(cls, data):
@@ -111,31 +122,30 @@ class Post(BaseModel):
                 "content": row['content'],
                 "likes": row['likes'],
                 "user_id": row['user_id'],
-                "created_at": row['posts.created_at'],
-                "updated_at": row['posts.updated_at'],
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at']
             }
             user_data = {
                 "id": row['users.id'],
                 "first_name": row['first_name'],
                 "last_name": row['last_name'],
-                "username": row['username'],
+                "user_name": row['user_name'],
                 "location": row['location'],
-                "ocuppation": row['ocuppation'],
+                "occupation": row['occupation'],
                 "email": row['email'],
                 "password": row['password'],
                 "created_at": row['users.created_at'],
                 "updated_at": row['users.updated_at']
             }
             one_post = cls(post_data)
-            one_post.creator = User(user_data)
+            one_post.creator = User(user_data).to_json()
             all_posts.append(one_post)
         return all_posts
     
     # validate post
     @staticmethod
-    def validate_post(post):
-        is_valid = True
-        if len(post['content']) < 1:
-            flash("Content must be at least 1 character long")
-            is_valid = False
-        return is_valid
+    def validate_post(data):
+        errors = {}
+        if len(data['content']) < 1:
+            errors['content'] = "Content must be at least 1 character."
+        return errors
