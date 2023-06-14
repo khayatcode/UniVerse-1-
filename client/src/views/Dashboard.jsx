@@ -6,6 +6,7 @@ import SideBarProfile from '../components/SideBarProfile'
 import DisplayAllPosts from '../components/DisplayAllPosts'
 import Advertisement from '../components/Advertisement'
 import CreatePost from '../components/CreatePost'
+import FriendList from '../components/FriendList'
 
 // Do a welcome page with the person name
 const Dashboard = () => {
@@ -28,12 +29,12 @@ const Dashboard = () => {
         fetch(`http://127.0.0.1:5000/get_user/${userId}`)
         .then(response => response.json())
         .then(data => {
-            console.log("user info", data)
+            // console.log("user info", data)
             setUserInfo(data)
         })
         .catch(err => {
           console.log(err)
-          console.log("Get User error")
+          // console.log("Get User error")
         })
     }, [])
 
@@ -42,12 +43,12 @@ const Dashboard = () => {
     fetch(`http://127.0.0.1:5000/get_all_friends/${userId}`)
     .then(response => response.json())
     .then(data => {
-        console.log("all friends", data)
+        // console.log("all friends", data)
         setAllFriends(data)
     })
     .catch(err => {
       console.log(err)
-      console.log("Get friends error")
+      // console.log("Get friends error")
     })
 }, [])
   
@@ -57,12 +58,12 @@ const Dashboard = () => {
       .then(res => res.json())
       .then(res => {
         setAllPosts(res);
-        console.log("all posts", res);
-        console.log("successfully fetched data from backend");
+        // console.log("all posts", res);
+        // console.log("successfully fetched data from backend");
       })
       .catch(error => {
-        console.error('Error fetching members:', error);
-        console.log("failed to fetch data from backend");
+        // console.error('Error fetching members:', error);
+        // console.log("failed to fetch data from backend");
         // Handle the error (e.g., display an error message)
       });
 }, []);
@@ -84,6 +85,7 @@ const Dashboard = () => {
         </div>
         <div className="col-3">
         <Advertisement/>
+        <FriendList allFriends={allFriends} setAllFriends={setAllFriends} userId={userId}/>
         </div>
       </div>
     </div>

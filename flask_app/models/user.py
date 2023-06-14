@@ -44,6 +44,7 @@ class User(BaseModel):
     def get_one(cls, data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
         results = connectToMySQL(cls.DB).query_db(query, data)
+        print("results: ", results)
         user_data = {
             'id': results[0]['id'],
             'first_name': results[0]['first_name'],
@@ -93,7 +94,7 @@ class User(BaseModel):
     # get all users friends
     @classmethod
     def get_all_friends(cls, data):
-        query = "SELECT * FROM users JOIN friends ON users.id = friends.user_id WHERE friends.user_id = %(user_id)s;"
+        query = "SELECT * FROM users LEFT JOIN friends ON users.id = friends.friend_id WHERE friends.user_id = %(user_id)s;"
         results = connectToMySQL(cls.DB).query_db(query, data)
         friends = []
         for friend in results:
@@ -102,17 +103,22 @@ class User(BaseModel):
     
     # set user as friend
     @classmethod
-    def set_friend(cls, data):
+    def save_friend(cls, data):
         query = "INSERT INTO friends (user_id, friend_id) VALUES (%(user_id)s, %(friend_id)s);"
         results = connectToMySQL(cls.DB).query_db(query, data)
         friend_data = {
             "id": results,
             "user_id": data['user_id'],
-            "friend_id": data['friend_id'],
+            "friend_id": data['friend_id']
         }
-        return 
+        return friend_data
     
-
+    #  unfriend user
+    @classmethod
+    def unfriend(cls, data):
+        query = "DELETE FROM friends WHERE user_id = %(user_id)s AND friend_id = %(friend_id)s;"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        return results
     
     # static method to validate user registration
     @staticmethod

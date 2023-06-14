@@ -25,7 +25,7 @@ def register():
         "email": request.json['email'],
         "password" : pw_hash
     }
-    print("data is", data)
+    # print("data is", data)
     user = User.save(data)
     session['user_id'] = user
     return jsonify({'success': True, 'user': user}), 200
@@ -34,7 +34,7 @@ def register():
 def login():
     data = {"email": request.json['email']}
     user_in_db = User.get_by_email(data)
-    print("user in db is", user_in_db)
+    # print("user in db is", user_in_db)
     if not user_in_db:
         return jsonify({'success': False, 'message': 'Email not found'}), 400
     if not bcrypt.check_password_hash(user_in_db.password, request.json['password']):
@@ -61,9 +61,21 @@ def add_friend():
         "user_id": request.json['user_id'],
         "friend_id": request.json['friend_id']
     }
-    friend = User.save_friend(data)
-    return jsonify({'success': True}), 200
+    save_friend = User.save_friend(data)
+    # print("friend Id is", request.json['friend_id'])
+    friend = User.get_one({"id": request.json['friend_id']})
+    return jsonify({'success': True, 'friend': friend}), 200
 
+# unfriend a friend
+@app.route('/unfriend', methods=['POST'])
+def unfriend():
+    data = {
+        "user_id": request.json['user_id'],
+        "friend_id": request.json['friend_id']
+    }
+    unfriend = User.unfriend(data)
+    print("unfriended")
+    return jsonify({'success': True, 'message': 'deleted friend'}), 200
 # get all friends
 @app.route('/get_all_friends/<int:id>')
 def get_all_friends(id):
@@ -71,4 +83,6 @@ def get_all_friends(id):
         "user_id": id
     }
     friends = User.get_all_friends(data)
-    return jsonify([friend for friend in friends]), 200
+    # for friend in friends:
+    #     print("friend is", friend.to_json())
+    return jsonify([friend.to_json() for friend in friends]), 200

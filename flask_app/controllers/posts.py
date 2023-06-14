@@ -58,7 +58,7 @@ def create_post():
         "likes": request.json['likes'],
         "user_id": request.json['user_id']
     }
-    print("data is", data)
+    # print("data is", data)
     post = Post.save(data)
     return jsonify({'success': True, 'post': post}), 201
 

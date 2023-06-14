@@ -43,7 +43,7 @@ class Post(BaseModel):
             "likes": data['likes'],
             "user_id": data['user_id'],
         }
-        print("post_data: ", post_data)
+        # print("post_data: ", post_data)
         return post_data
     
     # UPDATE post
@@ -58,7 +58,7 @@ class Post(BaseModel):
             "likes": data['likes'],
             "user_id": data['user_id']
         }
-        print("post_data: ", post_data)
+        # print("post_data: ", post_data)
         return post_data
     
     # update likes
@@ -100,7 +100,7 @@ class Post(BaseModel):
             "likes": results[0]['likes'],
             "user_id": results[0]['user_id']
         }
-        print("post_data: ", post_data)
+        # print("post_data: ", post_data)
         return post_data
     
     # delete post

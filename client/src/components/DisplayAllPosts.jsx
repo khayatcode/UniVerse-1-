@@ -1,6 +1,7 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import DeleteStore from './DeleteStore'
+import AddFriend from './AddFriend'
 
 const DisplayAllPosts = (props) => {
     const {allPosts, userId, removeFromDom, allFriends, setAllFriends} = props
@@ -8,32 +9,37 @@ const DisplayAllPosts = (props) => {
     const sortPosts = (posts) => {
         return posts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     }
+
+    // useEffect(() => {
+    //     setIsFriend(allFriends.filter(friend => friend.friend_id === post.creator.id).length > 0)
+    //     }, [allFriends, post.creator.id])
     
-    const submitFriendHandler = (e) => {
-        e.preventDefault()
-        fetch("http://127.0.0.1:5000/add_friend", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                user_id: e.target.user_id.value,
-                friend_id: e.target.friend_id.value
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("data in submitFriend", data)
-            if (data.success) {
-                console.log("Friend has been added")
-                setAllFriends([data.friend, ...allFriends])
-            }
-        })
-        .catch(err => {
-            console.log(err)
-            console.log("There was an error adding the friend")
-        })
-    }
+    
+    // const submitFriendHandler = (e) => {
+    //     e.preventDefault()
+    //     fetch("http://127.0.0.1:5000/add_friend", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             user_id: e.target.user_id.value,
+    //             friend_id: e.target.friend_id.value
+    //         })
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log("data in submitFriend", data)
+    //         if (data.success) {
+    //             console.log("Friend has been added")
+    //             setAllFriends([data.friend, ...allFriends])
+    //         }
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //         console.log("There was an error adding the friend")
+    //     })
+    // }
 
   return (
     <div>
@@ -45,11 +51,7 @@ const DisplayAllPosts = (props) => {
                             <div className="d-flex">
                                 <h6 className="card-subtitle mb-2 text-muted">Posted by: {post.creator.user_name}</h6>
                                 <a href="#" className="card-link">View Profile</a>
-                                <form onSubmit={submitFriendHandler}>
-                                    <input type="hidden" name="user_id" value={userId}/>
-                                    <input type="hidden" name="friend_id" value={post.creator.id}/>
-                                    <input type="submit" value="Add Friend" className="btn btn-primary"/>
-                                </form>
+                                <AddFriend userId={userId} post={post} allFriends={allFriends} setAllFriends={setAllFriends}/> 
                             </div>
                             <h5 className="card-title">{post.content}</h5>
                             <p className="card-text">Likes: {post.likes}</p>
