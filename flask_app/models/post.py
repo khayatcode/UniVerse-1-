@@ -11,36 +11,37 @@ class Post(BaseModel):
     
     DB = "UniVerse"
 
-    json_fields = ['id', 'content', 'likes', 'user_id', 'created_at', 'updated_at', 'creator']
+    json_fields = ['id', 'content', 'user_id', 'created_at', 'updated_at', 'creator', 'likes']
     def __init__( self , data ):
         self.id = data['id']
         self.content = data['content']
-        self.likes = data['likes']
         self.user_id = data['user_id']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.creator = None
+        self.comments = None
+        self.likes = 0
+        
     
     def to_dict(self):
         return {
             "id": self.id,
             "content": self.content,
-            "likes": self.likes,
             "user_id": self.user_id,
             "creator": self.creator,
+            "likes": self.likes,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
     # save post
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO posts (content, likes, user_id, created_at, updated_at) VALUES (%(content)s, %(likes)s, %(user_id)s, NOW(), NOW());"
+        query = "INSERT INTO posts (content, user_id, created_at, updated_at) VALUES (%(content)s, %(user_id)s, NOW(), NOW());"
         result = connectToMySQL(cls.DB).query_db(query, data)
         print("result: ", result)
         post_data = {
             "id": result,
             "content": data['content'],
-            "likes": data['likes'],
             "user_id": data['user_id'],
         }
         # print("post_data: ", post_data)
@@ -49,31 +50,48 @@ class Post(BaseModel):
     # UPDATE post
     @classmethod
     def update(cls, data):
-        query = "UPDATE posts SET content = %(content)s, likes = %(likes)s WHERE id = %(id)s;"
+        query = "UPDATE posts SET content = %(content)s WHERE id = %(id)s;"
+        result = connectToMySQL(cls.DB).query_db(query, data)
+        # print("post_data: ", post_data)
+        return result
+    
+    # create a like
+    @classmethod
+    def create_like(cls, data):
+        query = "INSERT INTO likes (user_id, post_id, created_at, updated_at) VALUES (%(user_id)s, %(post_id)s, NOW(), NOW());"
         result = connectToMySQL(cls.DB).query_db(query, data)
         print("result: ", result)
-        post_data = {
-            "id": data['id'],
-            "content": data['content'],
-            "likes": data['likes'],
-            "user_id": data['user_id']
+        like_data = {
+            "id": result,
+            "user_id": data['user_id'],
+            "post_id": data['post_id']
         }
-        # print("post_data: ", post_data)
-        return post_data
+        return like_data
     
-    # update likes
-    def update_likes(self):
-        data = {
-            "id": self.id,
-            "likes": self.likes
+    # dislike a post
+    @classmethod
+    def delete_like(cls, data):
+        query_1 = "SELECT * FROM likes WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
+        result = connectToMySQL(cls.DB).query_db(query_1, data)
+        print("result: ", result[0]['id'])
+        like_data = {
+            "id": result[0]['id'],
+            "user_id": data['user_id'],
+            "post_id": data['post_id']
         }
-        query = "UPDATE posts SET likes = %(likes)s WHERE id = %(id)s;"
-        return connectToMySQL(self.DB).query_db(query, data)
+        query_2 = "DELETE FROM likes WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
+        connectToMySQL(cls.DB).query_db(query_2, data)
+        return like_data
     
     # get all posts
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM posts;"
+        query = """
+                SELECT posts.*, COUNT(likes.id) as likes
+                FROM posts 
+                LEFT JOIN likes ON posts.id = likes.post_id
+                GROUP BY posts.id;
+                """
         results = connectToMySQL(cls.DB).query_db(query)
         posts = []
         for post in results:
@@ -82,23 +100,38 @@ class Post(BaseModel):
     
     # get all posts by user
     def get_all_by_user(cls, data):
-        query = "SELECT * FROM posts WHERE user_id = %(user_id)s;"
+        query = """
+        SELECT posts.*, COUNT(likes.id) as likes
+        FROM posts 
+        LEFT JOIN likes ON posts.id = likes.post_id
+        WHERE posts.user_id = %(user_id)s
+        GROUP BY posts.id;
+        """
         results = connectToMySQL(cls.DB).query_db(query, data)
+        print("post results: ", results)
         posts = []
         for post in results:
-            posts.append(cls(post))
+            one_post = cls(post)
+            one_post.likes = post['likes'] # set likes attribute to number of likes
+            posts.append(one_post)
+        print("all posts: ", posts)
         return posts
     
     # get one post
     def get_one(cls, data):
-        query = "SELECT * FROM posts WHERE id = %(id)s;"
+        query = """"
+            SELECT posts.*, COUNT(likes.id) as likes
+            FROM posts 
+            LEFT JOIN likes ON posts.id = likes.post_id
+            WHERE posts.id = %(id)s;
+        """
         results = connectToMySQL(cls.DB).query_db(query, data)
         print("results: ", results)
         post_data = {
             "id": results[0]['id'],
             "content": results[0]['content'],
-            "likes": results[0]['likes'],
-            "user_id": results[0]['user_id']
+            "user_id": results[0]['user_id'],
+            "likes": results[0]['likes']
         }
         # print("post_data: ", post_data)
         return post_data
@@ -107,12 +140,20 @@ class Post(BaseModel):
     @classmethod
     def delete(cls, data):
         query = "DELETE FROM posts WHERE id = %(id)s;"
-        return connectToMySQL(cls.DB).query_db(query, data)
+        result = connectToMySQL(cls.DB).query_db(query, data)
+        print("delete post result: ", result)
+        return result
     
     # get all posts with creator
     @classmethod
     def get_all_posts_with_creator(cls):
-        query = "SELECT * FROM posts LEFT JOIN users ON posts.user_id = users.id;"
+        query = """
+        SELECT posts.*, users.*, COUNT(likes.id) as likes
+        FROM posts 
+        LEFT JOIN users ON posts.user_id = users.id
+        LEFT JOIN likes ON posts.id = likes.post_id
+        GROUP BY posts.id;
+        """
         results = connectToMySQL(cls.DB).query_db(query)
         print(results)
         all_posts = []
@@ -120,7 +161,6 @@ class Post(BaseModel):
             post_data = {
                 "id": row['id'],
                 "content": row['content'],
-                "likes": row['likes'],
                 "user_id": row['user_id'],
                 "created_at": row['created_at'],
                 "updated_at": row['updated_at']
@@ -139,7 +179,10 @@ class Post(BaseModel):
             }
             one_post = cls(post_data)
             one_post.creator = User(user_data).to_json()
+            one_post.likes = row['likes']
             all_posts.append(one_post)
+        for post in all_posts:
+            print(post.to_json())
         return all_posts
     
     # validate post

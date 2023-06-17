@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 const CreatePost = (props) => {
-    const {userId, allPosts, setAllPosts, userInfo} = props
+    const {sessionId, allPosts, setAllPosts, userInfo} = props
     const [postInfo, setPostInfo] = useState({
         id: "",
         content : "",
-        likes : 0,
-        user_id : userId,
-        creator: userInfo
+        user_id : sessionId,
+        creator: userInfo,
+        likes : 0
     })
     // do a useEffect to set the userInfo to the creator in the postInfo
     useEffect(() => {
@@ -18,7 +18,6 @@ const CreatePost = (props) => {
             creator: userInfo
         })
     }, [userInfo])
-    console.log("postInfo", postInfo)
 
     const [errors, setErrors] = useState({})
     const navigate = useNavigate()
@@ -45,13 +44,13 @@ const CreatePost = (props) => {
                     id: "",
                     content : "",
                     likes : 0,
-                    user_id : userId,
+                    user_id : sessionId,
                     creator: userInfo
                 })
 
                 setErrors({})
                 console.log("Post has been created")
-                navigate("/dashboard/" + userId)
+                navigate("/dashboard/" + sessionId)
             }
             else {
                 setErrors(data)
@@ -65,7 +64,7 @@ const CreatePost = (props) => {
 
   return (
     <div className='border rounded p-2'>
-        <p>Create a post: {userId}</p>
+        <p>Create a post:</p>
         {errors.content ? 
             <p className="text-danger">{errors.content}</p>
             : null
@@ -76,6 +75,7 @@ const CreatePost = (props) => {
                 <input type="hidden" name="likes" value={postInfo.likes} />
                 <input type="hidden" name="user_id" value={postInfo.user_id} />
                 <input type="hidden" name="creator" value={userInfo} />
+                <input type="hidden" name="likes" value={postInfo.likes} />
                 <input type="submit" value="Post" className="btn btn-primary" />
             </div>
         </form>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DeleteStore = (props) => {
+const DeletePost = (props) => {
     const {postId, successCallback} = props
 
     const deletePost = (e) => {
@@ -25,4 +25,4 @@ const DeleteStore = (props) => {
   )
 }
 
-export default DeleteStore
+export default DeletePost

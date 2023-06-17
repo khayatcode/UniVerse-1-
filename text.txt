@@ -1,0 +1,13 @@
+Major Big:
+    * Edit profile & posts (DONE)
+    * Be able to like posts (DONE)
+    * Be able to add comments in each post
+    * Profile Picture
+    * Style css
+
+Minor:
+    * Dark mode
+
+If I have time:
+    * Message other users
+

@@ -80,45 +80,70 @@ class User(BaseModel):
     def save(cls, data):
         query = "INSERT INTO users (first_name, last_name, user_name, location, occupation, email, password) VALUES (%(first_name)s, %(last_name)s, %(user_name)s, %(location)s, %(occupation)s, %(email)s, %(password)s);"
         results = connectToMySQL(cls.DB).query_db(query, data)
-        user_data = {
-            "id": results,
-            "first_name": data['first_name'],
-            "last_name": data['last_name'],
-            "user_name": data['user_name'],
-            "location": data['location'],
-            "occupation": data['occupation'],
-            "email": data['email']
-        }
-        return user_data
-    
-    # get all users friends
+        return results
+
+    # update user
     @classmethod
-    def get_all_friends(cls, data):
-        query = "SELECT * FROM users LEFT JOIN friends ON users.id = friends.friend_id WHERE friends.user_id = %(user_id)s;"
-        results = connectToMySQL(cls.DB).query_db(query, data)
-        friends = []
-        for friend in results:
-            friends.append(cls(friend))
-        return friends
-    
-    # set user as friend
-    @classmethod
-    def save_friend(cls, data):
-        query = "INSERT INTO friends (user_id, friend_id) VALUES (%(user_id)s, %(friend_id)s);"
-        results = connectToMySQL(cls.DB).query_db(query, data)
-        friend_data = {
-            "id": results,
-            "user_id": data['user_id'],
-            "friend_id": data['friend_id']
-        }
-        return friend_data
-    
-    #  unfriend user
-    @classmethod
-    def unfriend(cls, data):
-        query = "DELETE FROM friends WHERE user_id = %(user_id)s AND friend_id = %(friend_id)s;"
+    def update(cls, data):
+        query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, user_name = %(user_name)s, location = %(location)s, occupation = %(occupation)s WHERE id = %(id)s;"
         results = connectToMySQL(cls.DB).query_db(query, data)
         return results
+    
+    
+    # get all users follows
+    @classmethod
+    def get_all_follows(cls, data):
+        query = "SELECT * FROM users LEFT JOIN follows ON users.id = follows.follow_id WHERE follows.user_id = %(user_id)s;"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        follows = []
+        for follow in results:
+            follows.append(cls(follow))
+        return follows
+    
+    # get all followers
+    @classmethod
+    def get_all_followers(cls, data):
+        query = "SELECT * FROM users LEFT JOIN follows ON users.id = follows.user_id WHERE follows.follow_id = %(user_id)s;"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        followers = []
+        for follower in results:
+            followers.append(cls(follower))
+        return followers
+    
+    # set user as follow
+    @classmethod
+    def save_follow(cls, data):
+        query = "INSERT INTO follows (user_id, follow_id) VALUES (%(user_id)s, %(follow_id)s);"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        follow_data = {
+            "id": results,
+            "user_id": data['user_id'],
+            "follow_id": data['follow_id']
+        }
+        return follow_data
+    
+    #  unfollow user
+    @classmethod
+    def unfollow(cls, data):
+        query = "DELETE FROM follows WHERE user_id = %(user_id)s AND follow_id = %(follow_id)s;"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        return results
+    
+    # Get all users likes for a post
+    @classmethod
+    def get_all_users_like_post(cls, data):
+        query = "SELECT * FROM likes WHERE user_id = %(user_id)s;"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        user_likes = []
+        for row in results:
+            user_like = {
+                "id": row['id'],
+                "user_id": row['user_id'],
+                "post_id": row['post_id']
+            }
+            user_likes.append(user_like)
+            
+        return user_likes
     
     # static method to validate user registration
     @staticmethod
@@ -146,5 +171,21 @@ class User(BaseModel):
         if data['password'] != data['confirm_password']:
             errors['confirm_password'] = "Passwords do not match!"
         print("errors are", errors)
+        return errors
+    
+    # Validate Edit
+    @staticmethod
+    def validate_edit(data):
+        errors = {}
+        if len(data['first_name']) < 2:
+            errors['first_name'] = "First name must be at least 2 characters."
+        if len(data['last_name']) < 2:
+            errors['last_name'] = "Last name must be at least 2 characters."
+        if len(data['user_name']) < 2:
+            errors['user_name'] = "Username must be at least 2 characters."
+        if len(data['location']) < 2:
+            errors['location'] = "Location must be at least 2 characters."
+        if len(data['occupation']) < 2:
+            errors['occupation'] = "Occupation must be at least 2 characters."
         return errors
     

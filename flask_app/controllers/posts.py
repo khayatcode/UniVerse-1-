@@ -7,15 +7,6 @@ import datetime
 import json
 
 
-
-# @app.route('/members')
-# def members():
-#     return {"members": "Adam"}
-
-# dashboard to get logged in user
-@app.route('/dashboard')
-
-
 # get all posts
 @app.route('/get_all_posts')
 def get_all_posts():
@@ -23,13 +14,13 @@ def get_all_posts():
     return jsonify([post.to_json() for post in posts]), 200
 
 # get all posts by user
-@app.route('/get_all_posts_by_user/<int:id>')
-def get_all_posts_by_user(id):
+@app.route('/get_all_posts_by_user/<int:user_id>')
+def get_all_posts_by_user(user_id):
     data = {
-        "id": id
+        "user_id": user_id
     }
-    posts = Post.get_all_by_user(data)
-    return jsonify([post for post in posts]), 200
+    posts = Post.get_all_by_user(cls=Post, data=data)
+    return jsonify([post.to_json() for post in posts]), 200
 
 # get one post
 @app.route('/get_one_post/<int:id>')
@@ -55,7 +46,6 @@ def create_post():
         return jsonify(errors), 400
     data = {
         "content": request.json['content'],
-        "likes": request.json['likes'],
         "user_id": request.json['user_id']
     }
     # print("data is", data)
@@ -63,18 +53,17 @@ def create_post():
     return jsonify({'success': True, 'post': post}), 201
 
 # update a post
-@app.route('/update_post', methods=['PUT'])
-def update_post():
-    if not Post.validate_post(request.json):
-        return jsonify({'message': 'Invalid post data'}), 400
+@app.route('/update_post/<int:post_id>', methods=['POST'])
+def update_post(post_id):
+    errors = Post.validate_post(request.json)
+    if errors:
+        return jsonify(errors), 400
     data = {
-        "id": request.json['id'],
-        "content": request.json['content'],
-        "likes": request.json['likes'],
-        "user_id": request.json['user_id']
+        "id": post_id,
+        "content": request.json['content']
     }
     post = Post.update(data)
-    return jsonify(post), 200
+    return jsonify({'success': True, 'post': post}), 200
 
 # delete a post
 @app.route('/delete_post/<int:id>', methods=['DELETE'])
@@ -84,5 +73,26 @@ def delete_post(id):
     }
     post = Post.delete(data)
     return jsonify({'success': True, 'message': 'Succesfully deleted post'}), 204
+
+# create a like
+@app.route('/create_like/<int:user_id>/<int:post_id>', methods=['POST'])
+def create_like(user_id, post_id):
+    data = {
+        "user_id": user_id,
+        "post_id": post_id
+    }
+    like = Post.create_like(data)
+    return jsonify({'success': True, 'like': like}), 201
+
+# Delete a like
+@app.route('/delete_like/<int:user_id>/<int:post_id>', methods=['DELETE'])
+def delete_like(user_id, post_id):
+    data = {
+        "user_id": user_id,
+        "post_id": post_id
+    }
+    like = Post.delete_like(data)
+    print("like is", like)
+    return jsonify({'success': True, 'like': like}), 200
 
 

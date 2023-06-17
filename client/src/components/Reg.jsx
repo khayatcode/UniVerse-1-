@@ -5,7 +5,8 @@ import {useNavigate, Link} from 'react-router-dom'
 // The form should have a submit button that will send the data to the server.
 // The form should have a link to the Login page.
 
-const Reg = () => {
+const Reg = (props) => {
+    const {sessionId, setSessionId} = props
     const [userInfo, setUserInfo] = useState({
         id: "",
         first_name: "",
@@ -40,6 +41,7 @@ const submitReg = (e) => {
     .then(response => response.json())
     .then(data => {
         console.log("data in submitReg", data)
+        console.log("session id: ", data.user_id)
         if (data.success) {
             setUserInfo({
                 id: "",
@@ -54,8 +56,9 @@ const submitReg = (e) => {
 
             })
             setErrors({})
-            console.log("User has been registered")
-            navigate("/dashboard/" + data.user.id)
+            setSessionId(data.user_id)
+            // console.log("User has been registered")
+            navigate("/dashboard/" + data.user_id)
             // Display success message here
         } else {
             setErrors(data)

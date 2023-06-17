@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 
 
-const Log = () => {
+const Log = (props) => {
+    const {sessionId, setSessionId} = props
     const [userInfo, setUserInfo] = useState({
         email: "",
         password: ""
@@ -29,8 +30,12 @@ const Log = () => {
     .then(data => {
         console.log("data in submitLogin", data)
         if (data.success) {
-            setUserInfo(data.user)
+            setUserInfo({
+                email: "",
+                password: ""
+            })
             setErrors({})
+            setSessionId(data.user.id)
             navigate("/dashboard/" + data.user.id)
         } else {
             setErrors(data.message)

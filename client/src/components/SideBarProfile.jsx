@@ -1,9 +1,18 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useNavigate, useNavigation } from 'react-router-dom';
+
 
 
 const SideBarProfile = (props) => {
-  const {userInfo} = props
+  const {userInfo, navigateToProfile, sessionId} = props
+  
+  const navigate = useNavigate()
+
+  const editProfile = (e) => {
+    e.preventDefault()
+    navigate('/profile/edit/' + sessionId)
+  }
 
   return (
     <div>
@@ -13,9 +22,13 @@ const SideBarProfile = (props) => {
           <h6 className="card-subtitle mb-2 text-muted">Location: {userInfo.location}</h6>
           <p className="card-text">Occupation: {userInfo.occupation}</p>
           <p className="card-text">Email: {userInfo.email}</p>
-          <a href="#" className="card-link">View Profile</a>
-          <a href="#" className="card-link">Edit Profile</a>
-          <a href="#" className="card-link">Log Out</a>
+          {userInfo.id == sessionId ?
+            <div>
+              <button className="btn btn-primary" onClick={(e) => navigateToProfile(userInfo.id)}>View Profile</button>
+              <button className="btn btn-primary" onClick={(e) => editProfile(e)}>Edit Profile</button>
+              <a href="#" className="card-link">Log Out</a>
+            </div>
+          : null}
         </div>
     </div>
     </div>

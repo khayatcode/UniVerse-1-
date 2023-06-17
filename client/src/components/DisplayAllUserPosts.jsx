@@ -5,18 +5,20 @@ import DeletePost from './DeletePost'
 import AddFollow from './AddFollow'
 import LikeButton from './LikeButton'
 
-const DisplayAllPosts = (props) => {
-    const {allPosts, sessionId, removePost, loggedInUserFollows,  navigateToProfile, removeFollow, addFollow, loggedInUserLikes, addLike, removeLike} = props
-
+const DisplayUserPost = (props) => {
+    const {userInfo, allPosts, sessionId, removePost, loggedInUserFollows, removeFollow, addFollow, loggedInUserLikes, addLike, removeLike} = props
+    
     const sortPosts = (posts) => {
         return posts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     }
-
+    
     const navigate = useNavigate()
 
     const navigateToEdit = (postId) => {
         navigate("/post/edit/" + postId)
     }
+
+
 
   return (
     <div>
@@ -26,15 +28,14 @@ const DisplayAllPosts = (props) => {
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex">
-                                <h6 className="card-subtitle mb-2 text-muted">Posted by: {post.creator.user_name}</h6>
-                                <button className="btn btn-link" onClick={(e) => navigateToProfile(post.creator.id)}>View Profile</button>
+                                <h6 className="card-subtitle mb-2 text-muted">Posted by: {userInfo.user_name}</h6>
                                 <AddFollow 
                                     sessionId={sessionId} 
                                     post={post} 
                                     loggedInUserFollows={loggedInUserFollows} 
                                     removeFollow={removeFollow}
                                     addFollow={addFollow}
-                                    /> 
+                                /> 
                                 <LikeButton
                                     sessionId={sessionId}
                                     post={post}
@@ -45,7 +46,7 @@ const DisplayAllPosts = (props) => {
                             </div>
                             <h5 className="card-title">{post.content}</h5>
                             <p className="card-text">Likes: {post.likes}</p>
-                            {post.creator.id == sessionId ?
+                            {post.user_id == sessionId ?
                             <div>
                                 <button className="btn btn-link" onClick={(e) => navigateToEdit(post.id)}>Edit</button>
                                 <DeletePost successCallback={() => removePost(post.id)} postId={post.id}/>
@@ -61,4 +62,4 @@ const DisplayAllPosts = (props) => {
   )
 }
 
-export default DisplayAllPosts
+export default DisplayUserPost
