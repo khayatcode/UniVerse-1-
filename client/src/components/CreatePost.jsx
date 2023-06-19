@@ -7,6 +7,7 @@ const CreatePost = (props) => {
     const [postInfo, setPostInfo] = useState({
         id: "",
         content : "",
+        post_pic : null,
         user_id : sessionId,
         creator: userInfo,
         likes : 0
@@ -24,12 +25,15 @@ const CreatePost = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        const formData = new FormData()
+        formData.append('content', postInfo.content)
+        formData.append('post_pic', postInfo.post_pic)
+        formData.append('likes', postInfo.likes)
+        formData.append('user_id', postInfo.user_id)
+        formData.append('creator', postInfo.creator)
         fetch("http://127.0.0.1:5000/create_post", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(postInfo)
+            body: formData
         })
         .then(response => response.json())
         .then(data => {
@@ -37,12 +41,14 @@ const CreatePost = (props) => {
             if (data.success) {
                 const newPost = {
                     ...postInfo,
-                    id: data.post.id
+                    id: data.post.id,
+                    post_pic: data.post.post_pic,
                 }
                 setAllPosts([newPost, ...allPosts])
                 setPostInfo({
                     id: "",
                     content : "",
+                    post_pic : null,
                     likes : 0,
                     user_id : sessionId,
                     creator: userInfo
@@ -72,6 +78,7 @@ const CreatePost = (props) => {
         <form onSubmit={submitHandler}>
             <div className="form-group">
                 <textarea className="form-control" name="content" value={postInfo.content} onChange={(e) => setPostInfo({...postInfo, content: e.target.value})} placeholder="What's on your mind?"></textarea>
+                <input type="file" className="form-control-file" name="post_pic" onChange={(e) => setPostInfo({...postInfo, post_pic: e.target.files[0]})} />
                 <input type="hidden" name="likes" value={postInfo.likes} />
                 <input type="hidden" name="user_id" value={postInfo.user_id} />
                 <input type="hidden" name="creator" value={userInfo} />

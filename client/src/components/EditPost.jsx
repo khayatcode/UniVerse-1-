@@ -7,7 +7,7 @@ import DisplaySinglePost from './DisplaySinglePost';
 import Cookies from 'js-cookie';
 
 const EditPost = (props) => {
-  const {sessionId} = props
+  const {sessionId, setSessionId} = props
   const [loaded, setLoaded] = useState(false);
   const [errors, setErrors] = useState({})
   const [postInfo, setPostInfo] = useState({})
@@ -90,6 +90,7 @@ const EditPost = (props) => {
       <NavBar 
             sessionId={sessionId}
             navigateToProfile={navigateToProfile}
+            setSessionId={setSessionId}
         />
       {loaded && (
         <div className="container">

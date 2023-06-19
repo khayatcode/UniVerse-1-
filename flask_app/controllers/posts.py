@@ -1,11 +1,42 @@
 from flask_app import app
-from flask import render_template,redirect,request,session,flash, Flask, jsonify
+from flask import render_template,redirect,request,session,flash, Flask, jsonify, url_for, send_from_directory
 from flask_app.models.user import User
 from flask_app.models.post import Post
 from flask_app.models.comment import Comment
 import datetime
 import json
+from werkzeug.utils import secure_filename
+import os
+import tempfile
 
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+
+# @app.route('/uploads/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(UPLOAD_FOLDER, filename)
+
+# create a post
+@app.route('/create_post', methods=['POST'])
+def create_post():
+    errors = Post.validate_post(request.form)
+    if errors:
+        return jsonify(errors), 400
+    
+    file = request.files['post_pic']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(UPLOAD_FOLDER, filename))
+    post_pic_url = url_for('uploaded_file', filename=filename, _external=True)
+    print("profile pic url is", post_pic_url)
+    
+    data = {
+        "content": request.form['content'],
+        "user_id": request.form['user_id'],
+        "post_pic": post_pic_url
+        
+    }
+    # print("data is", data)
+    post = Post.save(data)
+    return jsonify({'success': True, 'post': post}), 201
 
 # get all posts
 @app.route('/get_all_posts')
@@ -37,20 +68,6 @@ def get_all_posts_with_creator():
     posts = Post.get_all_posts_with_creator()
     
     return jsonify([post.to_json() for post in posts]), 200
-
-# create a post
-@app.route('/create_post', methods=['POST'])
-def create_post():
-    errors = Post.validate_post(request.json)
-    if errors:
-        return jsonify(errors), 400
-    data = {
-        "content": request.json['content'],
-        "user_id": request.json['user_id']
-    }
-    # print("data is", data)
-    post = Post.save(data)
-    return jsonify({'success': True, 'post': post}), 201
 
 # update a post
 @app.route('/update_post/<int:post_id>', methods=['POST'])

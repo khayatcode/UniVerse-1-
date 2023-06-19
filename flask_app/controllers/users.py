@@ -1,29 +1,50 @@
 from flask_app import app
-from flask import render_template,redirect,request,session,flash, Flask, jsonify
+from flask import render_template,redirect,request,session,flash, Flask, jsonify, url_for, send_from_directory
 from flask_app.models.user import User
 from flask_app.models.post import Post
 from flask_app.models.comment import Comment
+import boto3
+from botocore.exceptions import NoCredentialsError
+from io import BytesIO
+import uuid
+from werkzeug.utils import secure_filename
+import os
+import tempfile
 
 from flask_bcrypt import Bcrypt        
 bcrypt = Bcrypt(app)
 
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 @app.route('/register', methods=['POST'])
 def register():
-    errors = User.validate_user(request.json)
+    errors = User.validate_user(request.form)
     if errors:
         return jsonify(errors), 400
+
     # continue with registration process
-    pw_hash = bcrypt.generate_password_hash(request.json['password'])
+    pw_hash = bcrypt.generate_password_hash(request.form['password'])
+    
+    
+    file = request.files['profile_pic']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(UPLOAD_FOLDER, filename))
+    profile_pic_url = url_for('uploaded_file', filename=filename, _external=True)
+    print("profile pic url is", profile_pic_url)
     data = {
-        "first_name": request.json['first_name'],
-        "last_name": request.json['last_name'],
-        "user_name": request.json['user_name'],
-        "location": request.json['location'],
-        "occupation": request.json['occupation'],
-        "email": request.json['email'],
-        "password" : pw_hash
+        "first_name": request.form['first_name'],
+        "last_name": request.form['last_name'],
+        "user_name": request.form['user_name'],
+        "location": request.form['location'],
+        "occupation": request.form['occupation'],
+        "email": request.form['email'],
+        "password" : pw_hash,
+        "profile_pic": profile_pic_url
     }
     print("data is", data)
     user = User.save(data)

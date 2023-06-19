@@ -8,6 +8,7 @@ import Profile from './views/Profile';
 import Cookies from 'js-cookie';
 import EditProfile from './components/EditProfile';
 import EditPost from './components/EditPost';
+import ViewPost from './components/ViewPost';
 
 
 function App() {
@@ -35,8 +36,9 @@ function App() {
         <Route path="/login" element={<Log sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/dashboard/:sessionId" element={<Dashboard sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/profile/:userId" element={<Profile sessionId={sessionId} setSessionId={setSessionId}/>} />
-        <Route path="/profile/edit/:sessiodId" element={<EditProfile sessionId={sessionId}/>} />
-        <Route path="/post/edit/:postId" element={<EditPost sessionId={sessionId}/>} />
+        <Route path="/profile/edit/:sessiodId" element={<EditProfile sessionId={sessionId} setSessionId={setSessionId}/>} />
+        <Route path="/post/edit/:postId" element={<EditPost sessionId={sessionId} setSessionId={setSessionId}/>} />
+        <Route path="/post/view/:postId/:userId" element={<ViewPost sessionId={sessionId} setSessionId={setSessionId}/>} />
       </Routes>
     </div>
   );

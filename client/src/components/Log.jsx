@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 
 const Log = (props) => {
@@ -10,6 +11,10 @@ const Log = (props) => {
     })
     const [errors, setErrors] = useState({})
     const navigate = useNavigate()
+
+    console.log("session id: ", sessionId)
+
+    // do something that if session id still exists remove it
 
     const changeHandler = (e) => {
         setUserInfo({

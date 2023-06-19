@@ -14,6 +14,7 @@ const navigateToDashboard = (sessionId) => {
 
   const logout = () => {
     Cookies.remove('sessionId')
+    setSessionId("")
     navigate('/login')
   }
 

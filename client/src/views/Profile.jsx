@@ -109,10 +109,12 @@ const Profile = (props) => {
 
 
   return (
+    
     <div>
         <NavBar 
             sessionId={sessionId}
             navigateToProfile={navigateToProfile}
+            setSessionId={setSessionId}
 
         />
         {loaded && (

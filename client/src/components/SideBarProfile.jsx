@@ -6,7 +6,6 @@ import { useNavigate, useNavigation } from 'react-router-dom';
 
 const SideBarProfile = (props) => {
   const {userInfo, navigateToProfile, sessionId} = props
-  
   const navigate = useNavigate()
 
   const editProfile = (e) => {
@@ -14,8 +13,10 @@ const SideBarProfile = (props) => {
     navigate('/profile/edit/' + sessionId)
   }
 
+
   return (
     <div>
+      <img src={userInfo.profile_pic} height={50} />
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">User Name: {userInfo.user_name}</h5>
@@ -30,7 +31,7 @@ const SideBarProfile = (props) => {
             </div>
           : null}
         </div>
-    </div>
+      </div>
     </div>
   )
 }

@@ -11,10 +11,11 @@ class Post(BaseModel):
     
     DB = "UniVerse"
 
-    json_fields = ['id', 'content', 'user_id', 'created_at', 'updated_at', 'creator', 'likes']
+    json_fields = ['id', 'content', 'user_id', 'created_at', 'updated_at', 'creator', 'likes', 'post_pic']
     def __init__( self , data ):
         self.id = data['id']
         self.content = data['content']
+        self.post_pic = data['post_pic']
         self.user_id = data['user_id']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
@@ -27,6 +28,7 @@ class Post(BaseModel):
         return {
             "id": self.id,
             "content": self.content,
+            "post_pic": self.post_pic,
             "user_id": self.user_id,
             "creator": self.creator,
             "likes": self.likes,
@@ -36,13 +38,14 @@ class Post(BaseModel):
     # save post
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO posts (content, user_id, created_at, updated_at) VALUES (%(content)s, %(user_id)s, NOW(), NOW());"
+        query = "INSERT INTO posts (content, user_id, post_pic, created_at, updated_at) VALUES (%(content)s, %(user_id)s, %(post_pic)s, NOW(), NOW());"
         result = connectToMySQL(cls.DB).query_db(query, data)
         print("result: ", result)
         post_data = {
             "id": result,
             "content": data['content'],
-            "user_id": data['user_id'],
+            "post_pic": data['post_pic'],
+            "user_id": data['user_id']
         }
         # print("post_data: ", post_data)
         return post_data
@@ -119,7 +122,7 @@ class Post(BaseModel):
     
     # get one post
     def get_one(cls, data):
-        query = """"
+        query = """
             SELECT posts.*, COUNT(likes.id) as likes
             FROM posts 
             LEFT JOIN likes ON posts.id = likes.post_id
@@ -130,6 +133,7 @@ class Post(BaseModel):
         post_data = {
             "id": results[0]['id'],
             "content": results[0]['content'],
+            "post_pic": results[0]['post_pic'],
             "user_id": results[0]['user_id'],
             "likes": results[0]['likes']
         }
@@ -161,6 +165,7 @@ class Post(BaseModel):
             post_data = {
                 "id": row['id'],
                 "content": row['content'],
+                "post_pic": row['post_pic'],
                 "user_id": row['user_id'],
                 "created_at": row['created_at'],
                 "updated_at": row['updated_at']
@@ -174,6 +179,7 @@ class Post(BaseModel):
                 "occupation": row['occupation'],
                 "email": row['email'],
                 "password": row['password'],
+                "profile_pic": row['profile_pic'],
                 "created_at": row['users.created_at'],
                 "updated_at": row['users.updated_at']
             }

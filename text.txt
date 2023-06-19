@@ -1,8 +1,8 @@
 Major Big:
     * Edit profile & posts (DONE)
     * Be able to like posts (DONE)
-    * Be able to add comments in each post
-    * Profile Picture
+    * Be able to add comments in each post (DONE)
+    * Profile Picture (Done)
     * Style css
 
 Minor:
@@ -11,3 +11,49 @@ Minor:
 If I have time:
     * Message other users
 
+# # make a test request to AWS
+    # try:
+    #     s3.list_buckets()
+    #     print("AWS credentials are valid")
+    # except:
+    #     print("AWS credentials are invalid")
+    
+    # # get the uploaded file
+    # profile_pic = request.files['profile_pic']
+    
+    # # generate a unique key name for the uploaded file
+    # key_name = 'profile_pic_{}.jpg'.format(str(uuid.uuid4()))
+
+    # # upload the file to S3 with the unique key name
+    # try:
+    #     s3.upload_fileobj(profile_pic, 'adamuniverseproject', key_name, ExtraArgs={'ACL': 'public-read', 'ContentType': 'image/*'})
+    # except NoCredentialsError:
+    #     return jsonify({'error': 'AWS credentials not available'}), 500
+
+    # # generate the URL for the uploaded file
+    # url = s3.generate_presigned_url(
+    #     'get_object',
+    #     Params={
+    #         'Bucket': 'adamuniverseproject',
+    #         'Key': key_name
+    #     },
+    #     ExpiresIn=3600
+    # )
+
+    # # extract the URL from the generated URL
+    # profile_pic_url = url.split('?')[0] 
+    # print("profile pic url is", profile_pic_url)
+
+
+import tempfile
+
+UPLOAD_FOLDER = tempfile.mkdtemp()
+
+@app.route('/register', methods=['POST'])
+def register():
+    # ...
+    file = request.files['profile_pic']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(UPLOAD_FOLDER, filename))
+    profile_pic_url = url_for('uploaded_file', filename=filename, _external=True)
+    # ...

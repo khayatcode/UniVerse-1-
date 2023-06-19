@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import Advertisement from './Advertisement';
 
 const EditProfile = (props) => {
-    const {sessionId} = props
+    const {sessionId, setSessionId } = props
     const [loaded, setLoaded] = useState(false);
     const [errors, setErrors] = useState({})
     const [userInfo, setUserInfo] = useState({
@@ -89,6 +89,7 @@ const EditProfile = (props) => {
         <NavBar
             sessionId={sessionId}
             navigateToProfile={navigateToProfile}
+            setSessionId={setSessionId}
         />
         <div className="container">
             <div className="row">

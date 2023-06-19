@@ -12,7 +12,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 class User(BaseModel):
     DB = "UniVerse"
     
-    json_fields = ['id', 'first_name', 'last_name', 'user_name', 'location', 'occupation', 'email', 'password', 'created_at', 'updated_at']
+    json_fields = ['id', 'first_name', 'last_name', 'user_name', 'location', 'occupation', 'email', 'password', 'profile_pic', 'created_at', 'updated_at']
     def __init__( self , data ):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -22,6 +22,7 @@ class User(BaseModel):
         self.occupation = data['occupation']
         self.email = data['email']
         self.password = data['password']
+        self.profile_pic = data['profile_pic']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         
@@ -35,6 +36,7 @@ class User(BaseModel):
             'occupation': self.occupation,
             'email': self.email,
             'password': self.password,
+            'profile_pic': self.profile_pic,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
@@ -52,7 +54,8 @@ class User(BaseModel):
             'user_name': results[0]['user_name'],
             'location': results[0]['location'],
             'occupation': results[0]['occupation'],
-            'email': results[0]['email']
+            'email': results[0]['email'],
+            'profile_pic': results[0]['profile_pic']
         }
         return user_data
     
@@ -78,7 +81,7 @@ class User(BaseModel):
     # save user
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO users (first_name, last_name, user_name, location, occupation, email, password) VALUES (%(first_name)s, %(last_name)s, %(user_name)s, %(location)s, %(occupation)s, %(email)s, %(password)s);"
+        query = "INSERT INTO users (first_name, last_name, user_name, location, occupation, email, password, profile_pic) VALUES (%(first_name)s, %(last_name)s, %(user_name)s, %(location)s, %(occupation)s, %(email)s, %(password)s, %(profile_pic)s);"
         results = connectToMySQL(cls.DB).query_db(query, data)
         return results
 
@@ -152,6 +155,7 @@ class User(BaseModel):
         query = "SELECT * FROM users WHERE email = %(email)s;"
         # data is a dictionary that will be passed into the save method from server.py
         result = connectToMySQL('belt_exam').query_db( query, data)
+        print("result: ", result)
         if len(data['first_name']) < 2:
             errors['first_name'] = "First name must be at least 2 characters."
         if len(data['last_name']) < 2:
@@ -164,6 +168,9 @@ class User(BaseModel):
             errors['occupation'] = "Occupation must be at least 2 characters."
         if len(result) >= 1:
             errors['email_exist'] = "Email already in use."
+        # do validation for profile pic
+        # if len(data['profile_pic']) < 1:
+        #     errors['profile_pic'] = "Please upload a profile picture."
         if not EMAIL_REGEX.match(data['email']):
             errors['email'] = "Invalid email address!"
         if not password_regex.match(data['password']):

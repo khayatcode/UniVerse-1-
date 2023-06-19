@@ -26,7 +26,6 @@ useEffect(() => {
   if (!userSession) {
     navigate('/login');
   }
-
   Promise.all([
     fetch(`http://127.0.0.1:5000/get_user/${sessionId}`),
     fetch(`http://127.0.0.1:5000/get_all_follows/${sessionId}`),
@@ -88,6 +87,7 @@ useEffect(() => {
     <div>
       <NavBar 
         sessionId={sessionId}
+        setSessionId={setSessionId}
         navigateToProfile={navigateToProfile}
       />
       {loaded && (

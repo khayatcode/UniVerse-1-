@@ -12,6 +12,7 @@ const Reg = (props) => {
         first_name: "",
         last_name: "",
         user_name: "",
+        profile_pic: null,
         location: "",
         occupation: "",
         email: "",
@@ -23,20 +24,35 @@ const Reg = (props) => {
     const navigate = useNavigate()
 
     const changeHandler = (e) => {
-        setUserInfo({
-            ...userInfo,
-            [e.target.name]: e.target.value
-        })
-    }
+        if (e.target.name === "profile_pic") {
+            setUserInfo({
+                ...userInfo,
+                profile_pic: e.target.files[0]
+            });
+        } else {
+            setUserInfo({
+                ...userInfo,
+                [e.target.name]: e.target.value
+            });
+        }
+    };
 
 const submitReg = (e) => {
     e.preventDefault()
+    const formData = new FormData()
+    formData.append('first_name', userInfo.first_name)
+    formData.append('last_name', userInfo.last_name)
+    formData.append('user_name', userInfo.user_name)
+    formData.append('location', userInfo.location)
+    formData.append('occupation', userInfo.occupation)
+    formData.append('email', userInfo.email)
+    formData.append('password', userInfo.password)
+    formData.append('confirm_password', userInfo.confirm_password)
+    formData.append('profile_pic', userInfo.profile_pic)
+
     fetch("http://127.0.0.1:5000/register", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(userInfo)
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -48,6 +64,7 @@ const submitReg = (e) => {
                 first_name: "",
                 last_name: "",
                 user_name: "",
+                profile_pic: null,
                 location: "",
                 occupation: "",
                 email: "",
@@ -89,46 +106,70 @@ const submitReg = (e) => {
                 <form onSubmit={submitReg}>
                     <div className="row p-2">
                         <div className="col-3">
-                            <label htmlFor="first_name">First Name</label>
-                            <input type="text" className="form-control" name="first_name" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" name="first_name" id="first_name" onChange={changeHandler} placeholder="First Name"/>
+                                <label htmlFor="first_name">First Name</label>
+                            </div>
                         </div>
                         <div className="col-3">
-                            <label htmlFor="last_name">Last Name</label>
-                            <input type="text" className="form-control" name="last_name" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" name="last_name" id="last_name" onChange={changeHandler}/>
+                                <label htmlFor="last_name">Last Name</label>
+                            </div>
                         </div>
                     </div>
                     <div className="row p-2">
                         <div className="col-5">
-                            <label htmlFor="user_name">User Name</label>
-                            <input type="text" className="form-control" name="user_name" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" name="user_name" id="user_name" onChange={changeHandler}/>
+                                <label htmlFor="user_name">User Name</label>
+                            </div>
                         </div>
                     </div>
                     <div className="row p-2">
                         <div className="col-5">
-                            <label htmlFor="location">Location</label>
-                            <input type="text" className="form-control" name="location" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" name="location" id="location" onChange={changeHandler}/>
+                                <label htmlFor="location">Location</label>
+                            </div>
                         </div>
                     </div>
                     <div className="row p-2">
                         <div className="col-5">
-                            <label htmlFor="occupation">Occupation</label>
-                            <input type="text" className="form-control" name="occupation" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" name="occupation" id="occupation" onChange={changeHandler}/>
+                                <label htmlFor="occupation">Occupation</label>
+                            </div>
                         </div>
                     </div>
                     <div className="row p-2">
                         <div className="col-5">
-                            <label htmlFor="email">Email</label>
-                            <input type="text" className="form-control" name="email" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" name="email" id="email" onChange={changeHandler}/>
+                                <label htmlFor="email">Email</label>
+                            </div>
                         </div>
                     </div>
                     <div className="row p-2">
                         <div className="col-2">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control" name="password" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="password" className="form-control" name="password" id="password" onChange={changeHandler}/>
+                                <label htmlFor="password">Password</label>
+                            </div>
                         </div>
                         <div className="col-2">
-                            <label htmlFor="confirm_password">Confirm Password</label>
-                            <input type="password" className="form-control" name="confirm_password" onChange={changeHandler}/>
+                            <div className="form-floating">
+                                <input type="password" className="form-control" name="confirm_password" id="confirm_password" onChange={changeHandler}/>
+                                <label htmlFor="confirm_password">Confirm Password</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row p-2">
+                        <div className="col-5">
+                            <div className="">
+                                <input type="file" className="form-control-file" name="profile_pic" id="profile_pic" onChange={changeHandler}/>
+                                <label htmlFor="profile_pic">Profile Picture</label>
+                            </div>
                         </div>
                     </div>
                     <div className="row p-2">
@@ -141,7 +182,7 @@ const submitReg = (e) => {
                             <Link to="/login">Already have an account? Login here.</Link>
                         </div>
                     </div>
-                </form>
+                </form>         
             </div>
         </div>
     </div>

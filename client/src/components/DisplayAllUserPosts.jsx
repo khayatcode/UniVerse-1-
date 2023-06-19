@@ -18,6 +18,10 @@ const DisplayUserPost = (props) => {
         navigate("/post/edit/" + postId)
     }
 
+    const navigateToViewPost = (postId, userId) => {
+        navigate("/post/view/" + postId + "/" + userId)
+    }
+
 
 
   return (
@@ -46,11 +50,13 @@ const DisplayUserPost = (props) => {
                             </div>
                             <h5 className="card-title">{post.content}</h5>
                             <p className="card-text">Likes: {post.likes}</p>
+                            <img src={post.post_pic} className="card-img-top" alt="Post Pic"/>
                             {post.user_id == sessionId ?
                             <div>
                                 <button className="btn btn-link" onClick={(e) => navigateToEdit(post.id)}>Edit</button>
                                 <DeletePost successCallback={() => removePost(post.id)} postId={post.id}/>
                             </div> : null}
+                            <button className="btn btn-link" onClick={(e) => navigateToViewPost(post.id, userInfo.id)}>View Post/Comments</button>
                         </div>
                     </div>
                 </div>
