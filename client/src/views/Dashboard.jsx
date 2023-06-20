@@ -91,10 +91,15 @@ useEffect(() => {
         navigateToProfile={navigateToProfile}
       />
       {loaded && (
-        <div className="d-flex justify-content-around p-5 gap-4">
+        <div className="d-flex justify-content-around p-5 gap-4" style={{ backgroundColor: '#404040', marginTop: "7%"}}>
           <div className="col-3">
             <SideBarProfile userInfo={userInfo} navigateToProfile={navigateToProfile} sessionId={sessionId}/>
-            <FollowList allFollows={loggedInUserFollows}/>
+            <FollowList 
+              allFollows={loggedInUserFollows}
+              removeFollow={removeFollow}
+              userInfo={userInfo}
+              sessionId={sessionId}
+              />
           </div>
           <div className="col-6">
             <CreatePost 

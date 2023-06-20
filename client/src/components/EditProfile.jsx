@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import Advertisement from './Advertisement';
 
 const EditProfile = (props) => {
-    const {sessionId, setSessionId } = props
+    const { sessionId, setSessionId } = props
     const [loaded, setLoaded] = useState(false);
     const [errors, setErrors] = useState({})
     const [userInfo, setUserInfo] = useState({
@@ -19,7 +19,7 @@ const EditProfile = (props) => {
     }
     )
     const navigate = useNavigate()
-    
+
     const changeHandler = (e) => {
         setUserInfo({
             ...userInfo,
@@ -33,17 +33,17 @@ const EditProfile = (props) => {
             navigate('/login');
         }
         fetch(`http://127.0.0.1:5000/get_user/${sessionId}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("data in get_user", data)
-            setUserInfo(data)
-            setLoaded(true)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("data in get_user", data)
+                setUserInfo(data)
+                setLoaded(true)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }, [sessionId])
-    
+
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -54,27 +54,27 @@ const EditProfile = (props) => {
             },
             body: JSON.stringify(userInfo)
         })
-        .then(response => response.json())
-        .then(data => {
-            // console.log("data in submitReg", data)
-            if(data.success) {
-                setUserInfo({
-                    id: "",
-                    first_name: "",
-                    last_name: "",
-                    user_name: "",
-                    location: "",
-                    occupation: ""
-                })
-                setErrors({})
-                navigate("/profile/" + sessionId)
-            } else {
-                setErrors(data)
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(response => response.json())
+            .then(data => {
+                // console.log("data in submitReg", data)
+                if (data.success) {
+                    setUserInfo({
+                        id: "",
+                        first_name: "",
+                        last_name: "",
+                        user_name: "",
+                        location: "",
+                        occupation: ""
+                    })
+                    setErrors({})
+                    navigate("/profile/" + sessionId)
+                } else {
+                    setErrors(data)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const navigateToProfile = (sessionId) => {
@@ -84,56 +84,53 @@ const EditProfile = (props) => {
 
 
 
-  return (
-    <div>
-        <NavBar
-            sessionId={sessionId}
-            navigateToProfile={navigateToProfile}
-            setSessionId={setSessionId}
-        />
-        <div className="container">
-            <div className="row">
-                <div className="col-8">
-                    <h1>Edit Profile</h1>
-                    <form onSubmit={submitHandler}>
-                    {Object.keys(errors).length > 0 ?
-                        <div className="alert alert-danger row" role="alert">
-                        {Object.values(errors).map((error, index) => (
-                            <p key={index}>{error}</p>
-                        ))}
-                        </div>
-                    : null
-                    }
-                        <div className="form-group">
-                            <label>First Name</label>
-                            <input onChange={changeHandler} type="text" name="first_name" className="form-control" value={userInfo.first_name}/>
-                        </div>
-                        <div className="form-group">
-                            <label>Last Name</label>
-                            <input onChange={changeHandler} type="text" name="last_name" className="form-control" value={userInfo.last_name}/>
-                        </div>
-                        <div className="form-group">
-                            <label>User Name</label>
-                            <input onChange={changeHandler} type="text" name="user_name" className="form-control" value={userInfo.user_name}/>
-                        </div>
-                        <div className="form-group">
-                            <label>Location</label>
-                            <input onChange={changeHandler} type="text" name="location" className="form-control" value={userInfo.location}/>
-                        </div>
-                        <div className="form-group">
-                            <label>Occupation</label>
-                            <input onChange={changeHandler} type="text" name="occupation" className="form-control" value={userInfo.occupation}/>
-                        </div>
-                        <input type="submit" value="Update" className="btn btn-primary"/>
-                    </form>
-                </div>
-                <div className="col-4">
-                    <Advertisement />
+    return (
+        <div>
+            <NavBar
+                sessionId={sessionId}
+                navigateToProfile={navigateToProfile}
+                setSessionId={setSessionId}
+            />
+            <div style={{ backgroundColor: '#404040', marginTop: "7%", height: '100vh' }}>
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div className="col-6 row rounded p-3 mb-5" style={{ backgroundColor: '#D3D3D3', marginTop: "5%" }}>
+                        <h5 className='mb-3'><strong>Edit Your UniVerse</strong></h5>
+                        <form onSubmit={submitHandler}>
+                            {Object.keys(errors).length > 0 ?
+                                <div className="alert alert-danger row" role="alert">
+                                    {Object.values(errors).map((error, index) => (
+                                        <p key={index}>{error}</p>
+                                    ))}
+                                </div>
+                                : null
+                            }
+                            <div className="form-floating mb-3">
+                                <input onChange={changeHandler} type="text" name="first_name" className="form-control" value={userInfo.first_name} placeholder='First Name'/>
+                                <label className="form-label">First Name</label>
+                            </div>
+                            <div className="form-floating mb-3">
+                                <input onChange={changeHandler} type="text" name="last_name" className="form-control" value={userInfo.last_name} placeholder='Lasst Name'/>
+                                <label className="form-label">Last Name</label>
+                            </div>
+                            <div className="form-floating mb-3">
+                                <input onChange={changeHandler} type="text" name="user_name" className="form-control" value={userInfo.user_name} placeholder='User Name'/>
+                                <label className="form-label">User Name</label>
+                            </div>
+                            <div className="form-floating mb-3">
+                                <input onChange={changeHandler} type="text" name="location" className="form-control" value={userInfo.location} placeholder='Location'/>
+                                <label className="form-label">Location</label>
+                            </div>
+                            <div className="form-floating mb-3">
+                                <input onChange={changeHandler} type="text" name="occupation" className="form-control" value={userInfo.occupation} placeholder='Occupation'/>
+                                <label className="form-label">Occupation</label>
+                            </div>
+                            <input type="submit" value="Update" className="btn text-white col-4" style={{ backgroundColor: '#483D8B' }} />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default EditProfile

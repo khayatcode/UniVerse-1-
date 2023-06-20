@@ -69,23 +69,26 @@ const CreatePost = (props) => {
     }
 
   return (
-    <div className='border rounded p-2'>
-        <p>Create a post:</p>
+    <div className='border rounded p-3' style={{backgroundColor: "#f2f2f2"}}>
         {errors.content ? 
             <p className="text-danger">{errors.content}</p>
             : null
         }
-        <form onSubmit={submitHandler}>
-            <div className="form-group">
-                <textarea className="form-control" name="content" value={postInfo.content} onChange={(e) => setPostInfo({...postInfo, content: e.target.value})} placeholder="What's on your mind?"></textarea>
-                <input type="file" className="form-control-file" name="post_pic" onChange={(e) => setPostInfo({...postInfo, post_pic: e.target.files[0]})} />
-                <input type="hidden" name="likes" value={postInfo.likes} />
-                <input type="hidden" name="user_id" value={postInfo.user_id} />
-                <input type="hidden" name="creator" value={userInfo} />
-                <input type="hidden" name="likes" value={postInfo.likes} />
-                <input type="submit" value="Post" className="btn btn-primary" />
-            </div>
-        </form>
+        <p className='text-start'>Create a post:</p>
+        <div>
+            <form onSubmit={submitHandler}>
+                <div className="form-group text-start">
+                    <textarea className="form-control" name="content" value={postInfo.content} onChange={(e) => setPostInfo({...postInfo, content: e.target.value})} placeholder="What's on your mind?"></textarea>
+                    <label htmlFor="post_pic" className="form-label mt-3">Upload a picture:</label>
+                    <input type="file" className="form-control" name="post_pic" onChange={(e) => setPostInfo({...postInfo, post_pic: e.target.files[0]})} />
+                </div>
+                    <input type="hidden" name="likes" value={postInfo.likes} />
+                    <input type="hidden" name="user_id" value={postInfo.user_id} />
+                    <input type="hidden" name="creator" value={userInfo} />
+                    <input type="hidden" name="likes" value={postInfo.likes} />
+                    <input type="submit" value="Post" className="btn mt-3 col-2 text-white" style={{ fontWeight: 'bold', backgroundColor: "#483D8B" }} />
+            </form>
+        </div>
     </div>
   )
 }

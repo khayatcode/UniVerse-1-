@@ -19,27 +19,28 @@ const navigateToDashboard = (sessionId) => {
   }
 
 
+
+
   return (
-    <div>
-      <nav className='navbar navbar-expand-xl navbar-dark bg-dark p-3'>
-        <div className='container-fluid'>
-          <h1 className='navbar-brand display-1' style={{ fontSize: '24px' }}>UniVerse</h1>
+  <div>
+      <nav className='navbar navbar-expand-xl p-4 fixed-top' style={{ backgroundColor: '#333333'}}>
+        <div className='container d-flex justify-content-between'>
+          <h1 className='navbar-brand display-1 text-white' style={{ fontSize: '38px', marginLeft: '1rem'}}>UniVerse</h1>
           <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
             <span className='navbar-toggler-icon'></span>
           </button>
-          <div className='collapse navbar-collapse' id='navbarNav'>
-            <ul className='navbar-nav'>
+          <div >
+            <ul className='navbar-nav gap-3 justify-content-evenly'>
               <li className='nav-item'>
-                <button className='nav-link btn btn-dark' onClick={(e) => navigateToDashboard(sessionId)}>Dashboard</button>
+                <button className='btn btn-outline-light' onClick={(e) => { navigateToDashboard(sessionId); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ fontWeight: 'bold' }}>Dashboard</button>              </li>
+              <li className='nav-item'>
+                <button className='btn btn-outline-light' onClick={(e) => navigateToProfile(sessionId)} style={{ fontWeight: 'bold' }} >Profile</button>
               </li>
+              {/* <li className='nav-item'>
+                <button className=' btn btn-outline-dark' onClick={() => navigate('/darkmode')} style={{ fontWeight: 'bold' }} >Dark Mode</button>
+              </li> */}
               <li className='nav-item'>
-                <button className='nav-link btn btn-dark' onClick={(e) => navigateToProfile(sessionId)}>Profile</button>
-              </li>
-              <li className='nav-item'>
-                <button className='nav-link btn btn-dark' onClick={() => logout() }>Logout</button>
-              </li>
-              <li className='nav-item'>
-                <button className='nav-link btn btn-dark' onClick={() => navigate('/darkmode')}>Dark Mode</button>
+                <button className=' btn btn-outline-danger' onClick={() => logout()} style={{ fontWeight: 'bold' }} >Logout</button>
               </li>
             </ul>
           </div>

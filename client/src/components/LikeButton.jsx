@@ -49,9 +49,9 @@ const LikeButton = (props) => {
   return (
     <div>
         {loggedInUserLikes.find(like => like.post_id == post.id) ?
-           <button onClick={deleteLikeHandler} className='btn btn-danger'>Unlike</button>
+           <button onClick={deleteLikeHandler} className='btn btn-danger btn-sm'>Unlike</button>
             :
-            <button onClick={addLikeHandler} className='btn btn-primary'>Like</button>
+            <button onClick={addLikeHandler} className='btn btn-primary btn-success btn-sm'>Like</button>
         }
     </div>
   )
