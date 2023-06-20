@@ -75,7 +75,7 @@ const DisplayAllPosts = (props) => {
 
                 )
             })
-            ) : <p>No Posts Yet</p>}
+            ) : <h3 className='text-white'>No Posts Yet</h3>}
         </div>
     )
 }

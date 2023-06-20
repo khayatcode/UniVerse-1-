@@ -9,6 +9,7 @@ import CreatePost from '../components/CreatePost'
 import FollowList from '../components/FollowList'
 import Cookies from 'js-cookie';
 import { Followers } from '../components/Followers'
+import MilkyWay from '../images/milkyWay.jpeg'
 
 // Do a welcome page with the person name
 const Dashboard = (props) => {
@@ -81,6 +82,9 @@ useEffect(() => {
     const navigateToProfile = (sessionId) => {
       navigate("/profile/" + sessionId)
   }
+    const navigateToDashboard = (sessionId) => {
+      navigate("/dashboard/" + sessionId)
+  }
 
         
   return (
@@ -91,41 +95,45 @@ useEffect(() => {
         navigateToProfile={navigateToProfile}
       />
       {loaded && (
-        <div className="d-flex justify-content-around p-5 gap-4" style={{ backgroundColor: '#404040', marginTop: "7%"}}>
-          <div className="col-3">
+        <div>
+          <div className='' style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
             <SideBarProfile userInfo={userInfo} navigateToProfile={navigateToProfile} sessionId={sessionId}/>
-            <FollowList 
-              allFollows={loggedInUserFollows}
-              removeFollow={removeFollow}
-              userInfo={userInfo}
-              sessionId={sessionId}
+          </div>
+          <div className="d-flex justify-content-end p-5 gap-4" style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%"}}>
+            <div className="col-6">
+              <CreatePost 
+                sessionId={sessionId} 
+                allPosts={allPosts} 
+                setAllPosts={setAllPosts} 
+                userInfo={userInfo} 
+                navigateFunction={navigateToDashboard}
+                />
+
+              <DisplayAllPosts 
+                allPosts={allPosts} 
+                sessionId={sessionId} 
+                removePost={removePost} 
+                loggedInUserFollows={loggedInUserFollows} 
+                setLoggedInUserFollows={setLoggedInUserFollows} 
+                navigateToProfile={navigateToProfile}
+                removeFollow={removeFollow}
+                addFollow={addFollow}
+                loggedInUserLikes={loggedInUserLikes}
+                addLike={addLike}
+                removeLike={removeLike}
               />
-          </div>
-          <div className="col-6">
-            <CreatePost 
-              sessionId={sessionId} 
-              allPosts={allPosts} 
-              setAllPosts={setAllPosts} 
-              userInfo={userInfo} />
-            <DisplayAllPosts 
-              allPosts={allPosts} 
-              sessionId={sessionId} 
-              removePost={removePost} 
-              loggedInUserFollows={loggedInUserFollows} 
-              setLoggedInUserFollows={setLoggedInUserFollows} 
-              navigateToProfile={navigateToProfile}
-              removeFollow={removeFollow}
-              addFollow={addFollow}
-              loggedInUserLikes={loggedInUserLikes}
-              addLike={addLike}
-              removeLike={removeLike}
-            />
-          </div>
-          <div className="col-3">
-          <Advertisement/>
-          <Followers 
-            allFollowers={loggedInUserFollowers}
-            />
+            </div>
+            <div className="col-3">
+            <FollowList 
+                allFollows={loggedInUserFollows}
+                removeFollow={removeFollow}
+                userInfo={userInfo}
+                sessionId={sessionId}
+                />
+            <Followers 
+              allFollowers={loggedInUserFollowers}
+              />
+            </div>
           </div>
         </div>
       )}

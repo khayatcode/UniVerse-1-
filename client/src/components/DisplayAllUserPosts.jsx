@@ -46,7 +46,7 @@ const DisplayUserPost = (props) => {
                                 </div>
                                 <hr />
                                 <p className="card-text text-start mt-1">{post.content}</p>
-                                <img src={post.post_pic} className="card-img-top" alt="Post Pic" />
+                                <img src={post.post_pic} className="card-img-top rounded" alt="Post Pic" />
                                 <div className='d-flex justify-content-between align-items-center mt-3'>
                                     <div className='d-block'>
                                         <div className='d-flex gap-2 align-items-center'>
@@ -75,7 +75,7 @@ const DisplayUserPost = (props) => {
 
                 )
             })
-            ) : <p>No Posts Yet</p>}
+            ) : <h3 className='text-white'>No Posts Yet</h3>}
         </div>
     )
 }

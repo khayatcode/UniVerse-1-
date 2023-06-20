@@ -5,7 +5,7 @@ import myImage from '../images/aveeno.jpg'
 const Advertisement = () => {
   return (
     <div className='border rounded p-2' style={{backgroundColor: "#f2f2f2"}}>
-        <p><strong>Sponsored for today</strong></p>
+        <p className=''><strong>Sponsored</strong></p>
         <img src={myImage} alt="Advertisemnt picture" style={{ width: '200px', height: 'auto' }} className='rounded'/>
         <div className="d-flex justify-content-around mt-3">
             <p>Aveeno</p>

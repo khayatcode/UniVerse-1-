@@ -21,7 +21,16 @@ const Reg = (props) => {
         password: "",
         confirm_password: "",
     });
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        first_name: "",
+        last_name: "",
+        user_name: "",
+        location: "",
+        occupation: "",
+        email: "",
+        password: "",
+        confirm_password: ""
+    });
     const navigate = useNavigate();
 
     const changeHandler = (e) => {
@@ -89,21 +98,19 @@ const Reg = (props) => {
 
     return (
         <div>
-            {/* <div className="row p-2 text-centre">
-            </div> */}
-                <div style={{backgroundImage: `url(${MilkyWay})`, height: '100vh'}}>
+                <div style={{backgroundImage: `url(${MilkyWay})`, height: "150vh"}}>
                     <h1 className='' style={{ color: "white", backgroundColor: 'transparent', fontWeight: 300, padding: '35px' }}>UniVerse</h1>
                     <div className="d-flex justify-content-center align-items-center" >
-                        <div className="col-6 row rounded p-3 mb-5" style={{ backgroundColor: '#D3D3D3' }}>
+                        <div className="col-4 row rounded p-3 mb-3" style={{ backgroundColor: '#f2f2f2' }}>
                             <div className="row mb-3">
                                 <div className="col">
                                     <h5><strong>Register Your UniVerse</strong></h5>
                                 </div>
                             </div>
                             {Object.keys(errors).length > 0 ? (
-                                <div className="alert alert-danger row" role="alert">
+                                <div>
                                     {Object.values(errors).map((error, index) => (
-                                        <p key={index}>{error}</p>
+                                        <p key={index} className="text-danger">{error}</p>
                                     ))}
                                 </div>
                             ) : null}
@@ -111,6 +118,7 @@ const Reg = (props) => {
                                 <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-floating">
+                                            
                                             <input
                                                 type="text"
                                                 className="form-control"

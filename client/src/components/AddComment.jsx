@@ -60,9 +60,9 @@ const AddComment = (props) => {
 
   return (
     <div>
-        <div className='border rounded p-2'>
-            <p>Create Comment:</p>
+        <div className='border rounded p-3' style={{backgroundColor: "#f2f2f2"}}>
             {errors.description ? <p className="text-danger">{errors.description}</p> : null}
+            <p className='text-start'>Create Comment:</p>
             <form onSubmit={submitCommentHandler}>
                 <div className="form-group">
                     <textarea
@@ -76,7 +76,7 @@ const AddComment = (props) => {
                     <input type="hidden" name="user_id" value={sessionId} />
                     <input type="hidden" name="post_id" value={postId} />
                 </div>
-                <input type="submit" value="Create Comment" className="btn btn-primary" />
+                <input type="submit" value="Create Comment" className="btn mt-3 col-3 text-white" style={{ fontWeight: 'bold', backgroundColor: "#483D8B" }} />
             </form>
 
 

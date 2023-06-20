@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar'
 import Cookies from 'js-cookie';
 import Advertisement from './Advertisement';
+import MilkyWay from '../images/milkyWay.jpeg'
 
 const EditProfile = (props) => {
     const { sessionId, setSessionId } = props
@@ -91,15 +92,15 @@ const EditProfile = (props) => {
                 navigateToProfile={navigateToProfile}
                 setSessionId={setSessionId}
             />
-            <div style={{ backgroundColor: '#404040', marginTop: "7%", height: '100vh' }}>
+            <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", height: '150vh' }}>
                 <div className='d-flex justify-content-center align-items-center'>
                     <div className="col-6 row rounded p-3 mb-5" style={{ backgroundColor: '#D3D3D3', marginTop: "5%" }}>
                         <h5 className='mb-3'><strong>Edit Your UniVerse</strong></h5>
                         <form onSubmit={submitHandler}>
                             {Object.keys(errors).length > 0 ?
-                                <div className="alert alert-danger row" role="alert">
+                                <div>
                                     {Object.values(errors).map((error, index) => (
-                                        <p key={index}>{error}</p>
+                                        <p key={index} className='text-danger'>{error}</p>
                                     ))}
                                 </div>
                                 : null

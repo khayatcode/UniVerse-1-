@@ -8,6 +8,8 @@ import FollowList from '../components/FollowList'
 import DisplayAllUserPosts from '../components/DisplayAllUserPosts'
 import { Followers } from '../components/Followers'
 import Cookies from 'js-cookie';
+import CreatePost from '../components/CreatePost'
+import MilkyWay from '../images/milkyWay.jpeg'
 
 
 const Profile = (props) => {
@@ -89,6 +91,10 @@ const Profile = (props) => {
         setAllFollows(allFollows.filter(follower => follower.id !== followId))
     }
 
+    const removePost = postId => {
+        setAllPosts(allPosts.filter(post => post.id !== postId))
+    }
+
     // setAllFollowers([loggedInUserData, ...allFollowers])
     const addFollow = (followerData ) => {
         setLoggedInUserFollows([followerData, ...loggedInUserFollows])
@@ -108,6 +114,7 @@ const Profile = (props) => {
 
 
 
+
   return (
     
     <div>
@@ -118,7 +125,7 @@ const Profile = (props) => {
 
         />
         {loaded && (
-            <div className="d-flex justify-content-around p-5 gap-4" style={{ backgroundColor: '#404040', marginTop: "7%"}}>
+            <div className="d-flex justify-content-around p-5 gap-4" style={{ backgroundImage: `url(${MilkyWay})`, marginTop: "7%"}}>
                 <div className="col-3">
                     <SideBarProfile 
                         userInfo={userInfo} 
@@ -133,6 +140,18 @@ const Profile = (props) => {
                     />
                 </div>
                 <div className="col-6">
+                    { userInfo.id == sessionId ? 
+                        <div className="mb-3">
+                            <CreatePost
+                                sessionId={sessionId}
+                                setAllPosts={setAllPosts}
+                                allPosts={allPosts}
+                                userInfo={userInfo}
+                                navigateFunction={navigateToProfile}
+                            /> 
+                        </div>
+                        : null
+                    }
                     <DisplayAllUserPosts
                         userInfo={userInfo} 
                         allPosts={allPosts} 
@@ -145,6 +164,7 @@ const Profile = (props) => {
                         loggedInUserLikes={loggedInUserLikes}
                         addLike={addLike}
                         removeLike={removeLike}
+                        removePost={removePost}
                     />
                 </div>
                 <div className="col-3">

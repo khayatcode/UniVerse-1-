@@ -12,6 +12,7 @@ import AddComment from './AddComment';
 import Advertisement from './Advertisement';
 import FollowList from './FollowList';
 import DeletePost from './DeletePost';
+import MilkyWay from '../images/milkyWay.jpeg'
 
 
 
@@ -130,14 +131,19 @@ const ViewPost = (props) => {
 
       />
       {loaded && (
-        <div className="d-flex justify-content-around p-5 gap-4">
+        <div className="d-flex justify-content-around p-5 gap-4" style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%"}}>
           <div className="col-3">
               <SideBarProfile 
                   userInfo={userInfo} 
                   navigateToProfile={navigateToProfile}
                   sessionId={sessionId}
               />
-              <FollowList allFollows={allFollows}/>
+              <FollowList 
+                allFollows={allFollows}
+                removeFollow={removeFollow}
+                userInfo={userInfo}
+                sessionId={sessionId}
+              />
           </div>
           <div className="col-6">
             <AddComment 
@@ -146,40 +152,67 @@ const ViewPost = (props) => {
               addCommentToPost={addCommentToPost}
               loggedInUserData={loggedInUserData}
               />
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">Posted by: {userInfo.user_name}</h5>
-                <AddFollow 
-                  sessionId={sessionId} 
-                  post={postInfo} 
-                  loggedInUserFollows={loggedInUserFollows} 
-                  removeFollow={removeFollow}
-                  addFollow={addFollow}
-                /> 
-                <LikeButton
-                  sessionId={sessionId}
-                  post={postInfo}
-                  loggedInUserLikes={loggedInUserLikes}
-                  addLike={addLike}
-                  removeLike={removeLike}
-                />
-                <p className="card-text">{postInfo.content}</p>
-                <p className="card-text">{postInfo.likes} likes</p>
-                <img src={postInfo.post_pic} className="card-img-top" alt="Post Pic"/>
-                {postInfo.user_id == sessionId ?
+            <div className="card mt-3">
+              <div className="card-body" style={{backgroundColor: "#f2f2f2"}}>
+                <div className="row d-flex align-items-center gap-2">
+                    <div className='d-flex justify-content-start align-items-center gap-3'>
+                      <img src={userInfo.profile_pic} alt={userInfo.user_name} className='rounded-circle' style={{width: '65px', height: '65px'}}/>
+                      <h6 className="card-title "><strong><em>{userInfo.user_name}</em></strong></h6>
+                    </div>
+                    <div className='d-flex justify-content-end align-items-center gap-3'>
+                      <AddFollow 
+                        sessionId={sessionId} 
+                        post={postInfo} 
+                        loggedInUserFollows={loggedInUserFollows} 
+                        removeFollow={removeFollow}
+                        addFollow={addFollow}
+                      /> 
+                    </div>
+                </div>
+                <hr />
+                <p className="card-text text-start">{postInfo.content}</p>
+                <img src={postInfo.post_pic} className="card-img-top rounded" alt="Post Pic"/>
+                <div className='d-flex justify-content-between align-items-center mt-3'>
+                  <div className='d-block'>
+                      <div className='d-flex gap-2 align-items-center'>
+                        <LikeButton
+                          sessionId={sessionId}
+                          post={postInfo}
+                          loggedInUserLikes={loggedInUserLikes}
+                          addLike={addLike}
+                          removeLike={removeLike}
+                        />
+                        <p className="card-text">{postInfo.likes} likes</p>
+                      </div>
+                  </div>
                   <div>
-                      <button className="btn btn-link" onClick={(e) => navigateToEdit(postInfo.id)}>Edit</button>
+                      <button className="btn btn-sm text-white" style={{backgroundColor: "#8c8c8c"}} onClick={(e) => navigateToViewPost(post.id, userInfo.id)}>View/Comments</button>
+                  </div>
+                </div>
+
+                {postInfo.user_id == sessionId ?
+                  <div className='d-flex justify-content-center gap-2 mt-2'>
+                      <button className="btn btn-sm text-white" style={{backgroundColor: "#483D8B"}} onClick={(e) => navigateToEdit(postInfo.id)}>Edit</button>
                       <DeletePost successCallback={() => removePost(postInfo.id)} postId={postInfo.id}/>
                   </div> 
                   : null}
-                <button className="btn btn-link" onClick={(e) => navigateToViewPost(postInfo.id, userInfo.id)}>View Post/Comment</button>
               </div>
             </div>
-            <AllComments
-              allComments={allComments}
-              removeComment={removeComment}
-              sessionId={sessionId}
-            />
+            { allComments.length > 0 ?
+              <div>
+                <AllComments
+                allComments={allComments}
+                removeComment={removeComment}
+                sessionId={sessionId}
+              />
+              </div>
+              : <card className="card mt-3">
+                  <div className="card-body" style={{backgroundColor: "#f2f2f2"}}>
+                    <h3 className="card-title">No Comments</h3>
+                  </div>
+                </card>
+
+            }
           </div>
           <div className="col-3">
             <Advertisement />

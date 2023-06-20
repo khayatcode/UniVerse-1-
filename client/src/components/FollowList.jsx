@@ -31,24 +31,26 @@ const FollowList = (props) => {
         })
     }
     return (
-        <div className='border rounded mt-3 p-3' style={{backgroundColor: "#f2f2f2"}}>
+        <div className='border rounded p-3' style={{backgroundColor: "#f2f2f2"}}>
             <h4 className=''>Following</h4>
             <hr />
-            <div className='d-flex flex-column'>
+            <div className='d-flex flex-column' style={{height: "150px", overflowY: "scroll"}}>
                 {allFollows.map((follow, index) => {
                     return (
-                        <div key={index} className='d-flex justify-content-around align-items-center'>
-                            <img src={follow.profile_pic} alt={follow.user_name} className='rounded-circle' style={{ width: '50px', height: '50px' }} />
-                            <h6>
-                                <Link to={`/profile/${follow.id}`} className='text-decoration-underline text-dark'>{follow.user_name}</Link>
-                            </h6>
-                            { userInfo.id == sessionId ?
-                                <form onSubmit={submitDeleteFollowHandler}>
-                                    <input type="hidden" name="user_id" value={sessionId}/>
-                                    <input type="hidden" name="follow_id" value={follow.id}/>
-                                    <input type="submit" value="UnFollow" className="btn btn-outline-danger" style={{ fontWeight: 'bold' }}/>
-                                </form>
-                            : null}
+                        <div>
+                            <div key={index} className='d-flex justify-content-around align-items-center mt-3'>
+                                <img src={follow.profile_pic} alt={follow.user_name} className='rounded-circle' style={{ width: '50px', height: '50px' }} />
+                                <h6>
+                                    <Link to={`/profile/${follow.id}`} className='text-decoration-underline text-dark'>{follow.user_name}</Link>
+                                </h6>
+                                { userInfo.id == sessionId ?
+                                    <form onSubmit={submitDeleteFollowHandler}>
+                                        <input type="hidden" name="user_id" value={sessionId}/>
+                                        <input type="hidden" name="follow_id" value={follow.id}/>
+                                        <input type="submit" value="UnFollow" className="btn btn-outline-danger btn-sm" style={{ fontWeight: 'bold' }}/>
+                                    </form>
+                                : null}
+                            </div>
                             <hr />
                         </div>
                     )

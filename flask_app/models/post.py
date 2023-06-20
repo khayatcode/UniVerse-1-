@@ -143,6 +143,10 @@ class Post(BaseModel):
     # delete post
     @classmethod
     def delete(cls, data):
+        # delete comments first
+        query = "DELETE FROM comments WHERE post_id = %(id)s;"
+        connectToMySQL(cls.DB).query_db(query, data)
+        # delete post
         query = "DELETE FROM posts WHERE id = %(id)s;"
         result = connectToMySQL(cls.DB).query_db(query, data)
         print("delete post result: ", result)

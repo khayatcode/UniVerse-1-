@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 const CreatePost = (props) => {
-    const {sessionId, allPosts, setAllPosts, userInfo} = props
+    const {sessionId, allPosts, setAllPosts, userInfo, navigateFunction} = props
     const [postInfo, setPostInfo] = useState({
         id: "",
         content : "",
@@ -56,7 +56,7 @@ const CreatePost = (props) => {
 
                 setErrors({})
                 console.log("Post has been created")
-                navigate("/dashboard/" + sessionId)
+                navigateFunction(sessionId)
             }
             else {
                 setErrors(data)

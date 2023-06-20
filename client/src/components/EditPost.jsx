@@ -5,6 +5,9 @@ import NavBar from './NavBar'
 import SideBarProfile from './SideBarProfile'
 import DisplaySinglePost from './DisplaySinglePost';
 import Cookies from 'js-cookie';
+import MilkyWay from '../images/milkyWay.jpeg'
+
+
 
 const EditPost = (props) => {
   const {sessionId, setSessionId} = props
@@ -12,6 +15,7 @@ const EditPost = (props) => {
   const [errors, setErrors] = useState({})
   const [postInfo, setPostInfo] = useState({})
   const [userInfo, setUserInfo] = useState({})
+  const [loggedInUserLikes, setLoggedInUserLikes] = useState([])
   const [updatedPostInfo, setUpdatedPostInfo] = useState({
     id: "",
     content : "",
@@ -35,20 +39,35 @@ const EditPost = (props) => {
     }
     Promise.all([
       fetch(`http://127.0.0.1:5000/get_user/${sessionId}`),
-      fetch(`http://127.0.0.1:5000/get_one_post/${postId}`)
+      fetch(`http://127.0.0.1:5000/get_one_post/${postId}`),
+      fetch(`http://127.0.0.1:5000/get_all_users_like_post/${sessionId}`)
     ])
     .then(responses => Promise.all(responses.map(response => response.json())))
     .then(data => {
-      const [userInfo, postInfo] = data;
+      const [userInfo, postInfo, loggedInUserLikes] = data;
       setUserInfo(userInfo);
       setPostInfo(postInfo);
       setUpdatedPostInfo(postInfo);
+      setLoggedInUserLikes(loggedInUserLikes);
       setLoaded(true);
     })
     .catch(err => {
       console.log(err);
     });
   }, []);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:5000/get_one_post/${postId}`)
+    .then(response => response.json())
+    .then(data => {
+      setPostInfo(data)
+      setUpdatedPostInfo(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    }, [loggedInUserLikes])
+
 
   const navigateToProfile = (sessionId) => {
     navigate("/profile/" + sessionId)
@@ -80,7 +99,13 @@ const EditPost = (props) => {
     })
   }
 
+  const addLike = likeData => {
+    setLoggedInUserLikes([likeData, ...loggedInUserLikes])
+}
 
+  const removeLike = likeId => {
+      setLoggedInUserLikes(loggedInUserLikes.filter(like => like.id != likeId))
+  }
 
 
 
@@ -93,7 +118,7 @@ const EditPost = (props) => {
             setSessionId={setSessionId}
         />
       {loaded && (
-        <div className="container">
+        <div className='d-flex justify-content-around p-5 gap-4' style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%"}}>
           <div className="row">
             <div className="col-3">
               <SideBarProfile
@@ -102,9 +127,9 @@ const EditPost = (props) => {
                 navigateToProfile={navigateToProfile}
               />
             </div>
-            <div className="col-9">
-              <div className='border rounded p-2'>
-                <p>Edit Post:</p>
+            <div className="col-7">
+              <div className='border rounded p-3 mb-3' style={{backgroundColor: "#f2f2f2"}}>
+                <h6>Edit Post:</h6>
                 {errors.content ? 
                     <p className="text-danger">{errors.content}</p>
                     : null
@@ -117,7 +142,7 @@ const EditPost = (props) => {
                             value={updatedPostInfo.content}
                             onChange={changeHandler}
                         />
-                        <input type="submit" value="Update Post" className="btn btn-primary mt-2" />
+                        <input type="submit" value="Update Post" className="btn mt-2 text-white" style={{ fontWeight: 'bold', backgroundColor: "#483D8B" }}/>
                     </div>
                 </form>
               </div>
@@ -126,6 +151,10 @@ const EditPost = (props) => {
                 navigateToProfile={navigateToProfile}
                 userInfo={userInfo}
                 sessionId={sessionId}
+                loggedInUserLikes={loggedInUserLikes}
+                addLike={addLike}
+                removeLike={removeLike}
+
                 />
             </div>
           </div>

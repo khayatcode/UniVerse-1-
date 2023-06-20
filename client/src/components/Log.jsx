@@ -60,15 +60,19 @@ const Log = (props) => {
         <div>
             {/* <div className="row p-2 text-centre" style={{backgroundColor: "#483D8B" }}>
             </div> */}
-            <div style={{backgroundImage: `url(${MilkyWay})`, height: '100vh' }}>
+            <div style={{backgroundImage: `url(${MilkyWay})`, height: '150vh' }}>
                 <h1 className='' style={{ color: "white", backgroundColor: 'transparent', fontWeight: 300, padding: '35px' }}>UniVerse</h1>
                 <div className="d-flex justify-content-center align-items-center" style={{ marginTop: '100px' }}>
-                    <div className="col-6 row rounded-3 p-4" style={{ backgroundColor: "#D3D3D3" }}>
+                    <div className="col-6 row rounded-3 p-4" style={{ backgroundColor: "#f2f2f2" }}>
                         <div className="row mb-3">
                             <div className="col">
                                 <h5><strong>Login to Your UniVerse</strong></h5>
                             </div>
                         </div>
+                        {errors.length > 0 ?
+                            <p className="text-danger">{errors}</p> :
+                            null
+                        }
                         <form onSubmit={submitLog}>
                             <div className="row mb-3">
                                 <div className="col">
