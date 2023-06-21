@@ -19,7 +19,7 @@ const SideBarProfile = (props) => {
     <div className='d-flex align-items-center mb-3' style={{marginTop: "0.7%"}}>
       <div className="card" style={{ width: '400px' }}>
         <div className="card-body rounded" style={{backgroundColor: "#f2f2f2"}}>
-          <img src={userInfo.profile_pic} height={100} width={100} style={{ borderRadius: '50%' }} />
+          <img src={userInfo.profile_pic} height={100} width={100} style={{ borderRadius: '50%'}} />
           <hr />
           <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
             <h6 className="card-title "><strong>User Name:</strong></h6>
