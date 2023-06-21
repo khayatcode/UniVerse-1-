@@ -13,6 +13,7 @@ import Advertisement from './Advertisement';
 import FollowList from './FollowList';
 import DeletePost from './DeletePost';
 import MilkyWay from '../images/milkyWay.jpeg'
+import { Link } from 'react-router-dom';
 
 
 
@@ -163,6 +164,8 @@ const ViewPost = (props) => {
                         <img src={userInfo.profile_pic} alt={userInfo.user_name} className='rounded-circle' style={{width: '65px', height: '65px'}}/>
                         <h6 className="card-title "><strong>{userInfo.user_name}</strong></h6>
                       </div>
+                      <div className="d-flex justify-content-end align-items-center gap-3">
+                        <Link to={"/profile/" + userInfo.id} className="btn btn-outline-secondary">View Profile</Link>
                       <AddFollow 
                         sessionId={sessionId} 
                         post={postInfo} 
@@ -170,6 +173,7 @@ const ViewPost = (props) => {
                         removeFollow={removeFollow}
                         addFollow={addFollow}
                       /> 
+                      </div>
                   </div>
                   <hr />
                   <p className="card-text text-start">{postInfo.content}</p>

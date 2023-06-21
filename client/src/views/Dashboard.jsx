@@ -63,14 +63,16 @@ useEffect(() => {
     });
   }, [loggedInUserLikes]);
 
-//   useEffect(() => {
-//   window.scrollTo({
-//     top: window.innerHeight / 2.7,
-//     behavior: "smooth"
-//   });
-// }, [allPosts]);
-
-// everytime a post is deleted, the page will scroll to the top of the page
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/get_all_posts_by_user/' + sessionId)
+    .then(response => response.json())
+    .then(data => {
+      setLoggedInUserPosts(data)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    }, [allPosts]);
 
 
     

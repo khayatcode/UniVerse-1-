@@ -19,29 +19,29 @@ const SideBarProfile = (props) => {
     <div className='d-flex align-items-center mb-3' style={{marginTop: "0.7%"}}>
       <div className="card" style={{ width: '400px' }}>
         <div className="card-body rounded" style={{backgroundColor: "#f2f2f2"}}>
-          <img src={userInfo.profile_pic} height={100} width={100} className='rounded-circle' style={{ borderRadius: '50%' }} />
+          <img src={userInfo.profile_pic} height={100} width={100} style={{ borderRadius: '50%' }} />
           <hr />
-          <div className="d-flex align-items-center justify-content-between" style={{marginLeft: "10%"}}>
+          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
             <h6 className="card-title "><strong>User Name:</strong></h6>
-            <p className="card-text mb-1 " style={{marginRight: "20%"}}>{userInfo.user_name}</p>
+            <p className="card-text mb-1" style={{marginRight: "20%"}}>{userInfo.user_name}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between" style={{marginLeft: "10%"}}>
+          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
             <h6 className="card-subtitle "><strong>Occupation:</strong></h6>
             <p className="card-text mb-1" style={{marginRight: "20%"}}>{userInfo.occupation}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between" style={{marginLeft: "10%"}}>
+          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
             <h6 className="card-subtitle "><strong>Followers:</strong></h6>
             <p className="card-text mb-1" style={{marginRight: "20%"}}>{numberOfFollowers}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between" style={{marginLeft: "10%"}}>
+          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
             <h6 className="card-subtitle "><strong>Following:</strong></h6>
             <p className="card-text mb-1" style={{marginRight: "20%"}}>{numberOfFollows}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between" style={{marginLeft: "10%"}}>
+          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
             <h6 className="card-subtitle "><strong>Posts:</strong></h6>
             <p className="card-text mb-1" style={{marginRight: "20%"}}>{numberOfPosts}</p>
           </div>

@@ -5,11 +5,14 @@ Major Big:
     * Profile Picture (Done)
     * Style css
 
+
 Minor:
     * Dark mode
 
 If I have time:
     * Message other users
+
+
 
 # # make a test request to AWS
     # try:

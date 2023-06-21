@@ -54,7 +54,8 @@ class Comment(BaseModel):
         query = """
             SELECT * FROM comments 
             LEFT JOIN users ON comments.user_id = users.id
-            WHERE post_id = %(post_id)s;
+            WHERE post_id = %(post_id)s
+            ORDER BY comments.created_at DESC;
             """
         results = connectToMySQL(cls.DB).query_db(query, data)
         all_comments = []

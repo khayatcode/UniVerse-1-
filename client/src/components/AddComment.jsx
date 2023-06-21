@@ -46,6 +46,11 @@ const AddComment = (props) => {
                     post_id: postId,
                     creator: loggedInUserData
                 })
+                // scroll to the bottom of the page
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                })
             }
             else {
                 setErrors(data)
