@@ -1,19 +1,19 @@
 import React from 'react'
 // get my image from the public folder
-import myImage from '../images/aveeno.jpg'
+import myImage from '../images/lightSaber.webp'
 
 const Advertisement = () => {
   return (
     <div className='border rounded p-2' style={{backgroundColor: "#f2f2f2"}}>
         <p className=''><strong>Sponsored</strong></p>
+        <hr />
         <img src={myImage} alt="Advertisemnt picture" style={{ width: '200px', height: 'auto' }} className='rounded'/>
         <div className="d-flex justify-content-around mt-3">
-            <p>Aveeno</p>
-            <a href="https://www.aveeno.ca/" target="_blank">aveeno.ca</a>
+            <h6>NSabers</h6>
+            <a href="https://www.nsabers.com/" target="_blank">NSabers.com</a>
         </div>
-        <p>At Aveeno®, we promote the selection of natural ingredients to bring nourishing solutions to 
-            skincare so even the most dry or sensitive skin feels soothed and moisturized
-        </p>
+        <hr />
+        <p>Get Neopixel Lightsabers at Nsabers. Unleash your inner Jedi with custom designs and immersive effects for epic entertainment.</p>
     </div>
   )
 }

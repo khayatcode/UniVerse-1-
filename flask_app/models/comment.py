@@ -97,4 +97,6 @@ class Comment(BaseModel):
         errors = {}
         if len(data['description']) < 1:
             errors['description'] = "Description must be at least 1 character."
+        if len(data['description']) > 255:
+            errors['description'] = "Description must be less than 255 characters."
         return errors

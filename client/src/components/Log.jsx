@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import Galaxy from '../images/galaxy.jpg'
@@ -54,13 +54,18 @@ const Log = (props) => {
             })
     }
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, []);
+
+
 
 
     return (
         <div>
             {/* <div className="row p-2 text-centre" style={{backgroundColor: "#483D8B" }}>
             </div> */}
-            <div style={{backgroundImage: `url(${MilkyWay})`, height: '150vh' }}>
+            <div style={{backgroundImage: `url(${MilkyWay})`, paddingBottom: "20%" }}>
                 <h1 className='' style={{ color: "white", backgroundColor: 'transparent', fontWeight: 300, padding: '35px' }}>UniVerse</h1>
                 <div className="d-flex justify-content-center align-items-center" style={{ marginTop: '100px' }}>
                     <div className="col-6 row rounded-3 p-4" style={{ backgroundColor: "#f2f2f2" }}>

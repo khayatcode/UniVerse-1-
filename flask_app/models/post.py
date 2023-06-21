@@ -146,6 +146,9 @@ class Post(BaseModel):
         # delete comments first
         query = "DELETE FROM comments WHERE post_id = %(id)s;"
         connectToMySQL(cls.DB).query_db(query, data)
+        # delete likes
+        query = "DELETE FROM likes WHERE post_id = %(id)s;"
+        connectToMySQL(cls.DB).query_db(query, data)
         # delete post
         query = "DELETE FROM posts WHERE id = %(id)s;"
         result = connectToMySQL(cls.DB).query_db(query, data)
@@ -201,4 +204,7 @@ class Post(BaseModel):
         errors = {}
         if len(data['content']) < 1:
             errors['content'] = "Content must be at least 1 character."
+        if len(data['content']) > 255:
+            errors['content'] = "Content must be less than 255 characters."
+        
         return errors

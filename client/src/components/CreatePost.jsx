@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 const CreatePost = (props) => {
-    const {sessionId, allPosts, setAllPosts, userInfo, navigateFunction} = props
+    const {sessionId, allPosts, setAllPosts, userInfo, navigateFunction, postRef} = props
     const [postInfo, setPostInfo] = useState({
         id: "",
         content : "",
@@ -27,7 +27,7 @@ const CreatePost = (props) => {
         e.preventDefault()
         const formData = new FormData()
         formData.append('content', postInfo.content)
-        formData.append('post_pic', postInfo.post_pic)
+        formData.append('post_pic', postInfo.post_pic || '')
         formData.append('likes', postInfo.likes)
         formData.append('user_id', postInfo.user_id)
         formData.append('creator', postInfo.creator)
@@ -57,6 +57,14 @@ const CreatePost = (props) => {
                 setErrors({})
                 console.log("Post has been created")
                 navigateFunction(sessionId)
+
+                // Clear the file input field
+                document.querySelector('input[type="file"]').value = ''
+
+                window.scrollTo({
+                    top: window.innerHeight / 2.8,
+                    behavior: 'smooth'
+                });
             }
             else {
                 setErrors(data)
@@ -67,6 +75,7 @@ const CreatePost = (props) => {
             console.log("Console error")
         })
     }
+
 
   return (
     <div className='border rounded p-3' style={{backgroundColor: "#f2f2f2"}}>

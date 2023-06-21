@@ -21,12 +21,14 @@ def create_post():
     errors = Post.validate_post(request.form)
     if errors:
         return jsonify(errors), 400
-    
-    file = request.files['post_pic']
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(UPLOAD_FOLDER, filename))
-    post_pic_url = url_for('uploaded_file', filename=filename, _external=True)
-    print("profile pic url is", post_pic_url)
+
+    if 'post_pic' in request.files:
+        file = request.files['post_pic']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        post_pic_url = url_for('uploaded_file', filename=filename, _external=True)
+    else:
+        post_pic_url = ''
     
     data = {
         "content": request.form['content'],

@@ -82,8 +82,9 @@ const EditProfile = (props) => {
         navigate("/profile/" + sessionId)
     }
 
-
-
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, []);
 
     return (
         <div>
@@ -92,7 +93,7 @@ const EditProfile = (props) => {
                 navigateToProfile={navigateToProfile}
                 setSessionId={setSessionId}
             />
-            <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", height: '150vh' }}>
+            <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", paddingBottom: "10%" }}>
                 <div className='d-flex justify-content-center align-items-center'>
                     <div className="col-6 row rounded p-3 mb-5" style={{ backgroundColor: '#D3D3D3', marginTop: "5%" }}>
                         <h5 className='mb-3'><strong>Edit Your UniVerse</strong></h5>

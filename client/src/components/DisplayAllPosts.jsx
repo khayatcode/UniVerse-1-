@@ -27,11 +27,11 @@ const DisplayAllPosts = (props) => {
                 return (
                     <div key={index} className='mt-3'>
                         <div className="card">
-                            <div className="card-body" style={{backgroundColor: "#f2f2f2"}}>
+                            <div className="card-body rounded" style={{backgroundColor: "#f2f2f2"}}>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className='d-flex justify-content-around align-items-center gap-3'>
                                         <img src={post.creator.profile_pic} alt={post.creator.user_name} className='rounded-circle' style={{ width: '65px', height: '65px' }} />
-                                        <h6 className="card-title mb-2"><strong><em>{post.creator.user_name}</em></strong></h6>
+                                        <h6 className="card-title mb-2"><strong>{post.creator.user_name}</strong></h6>
                                     </div>
                                     <div className='d-flex gap-3'>
                                         <button className="btn btn-outline-secondary" style={{ fontWeight: 'bold' }} onClick={(e) => navigateToProfile(post.creator.id)}>View Profile</button>
@@ -46,7 +46,8 @@ const DisplayAllPosts = (props) => {
                                 </div>
                                 <hr />
                                 <p className="card-text text-start mt-1">{post.content}</p>
-                                <img src={post.post_pic} className="card-img-top mt-1 rounded" alt="Post Pic" />
+                                {post.post_pic == '' ? null : <img src={post.post_pic} className="card-img-top mt-1 rounded img-fluid" alt="Post Pic" style={{height: "350px", width : "auto"}}/>}
+                                <hr />
                                 <div className='d-flex justify-content-between align-items-center mt-3'>
                                     <div className='d-block'>
                                         <div className='d-flex gap-2 align-items-center'>
@@ -75,7 +76,7 @@ const DisplayAllPosts = (props) => {
 
                 )
             })
-            ) : <h3 className='text-white'>No Posts Yet</h3>}
+            ) : <h3 className='text-white mt-5'>No Posts Yet</h3>}
         </div>
     )
 }

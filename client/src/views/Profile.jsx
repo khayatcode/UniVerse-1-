@@ -20,6 +20,7 @@ const Profile = (props) => {
     const [allFollowers, setAllFollowers] = useState([])
     const [loggedInUserFollows, setLoggedInUserFollows] = useState([])
     const [loggedInUserLikes, setLoggedInUserLikes] = useState([])
+    const [isInProfile, setIsInProfile] = useState(true)
     const [userInfo, setUserInfo] = useState({
         id: "",
         first_name: "",
@@ -65,14 +66,17 @@ const Profile = (props) => {
 
     // create a useEffect, everytime you setLoggedInUserFollows, you update the state of allFollowers
     useEffect(() => {
-        fetch(`http://127.0.0.1:5000/get_all_followers/${userId}`)
-        .then(response => response.json())
+        Promise.all([
+            fetch(`http://127.0.0.1:5000/get_all_followers/${userId}`),
+            fetch(`http://127.0.0.1:5000/get_all_follows/${userId}`)
+        ])
+        .then(responses => Promise.all(responses.map(response => response.json())))
         .then(data => {
-            setAllFollowers(data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            const [allFollowers, allFollows] = data;
+            setAllFollowers(allFollowers);
+            setAllFollows(allFollows);
+        }
+        )
     }, [loggedInUserFollows])
 
     useEffect(() => {
@@ -88,7 +92,7 @@ const Profile = (props) => {
 
     // setAllFollowers(allFollowers.filter(follower => follower.id !== sessionId))
     const removeFollow = (followId) => {
-        setAllFollows(allFollows.filter(follower => follower.id !== followId))
+        setLoggedInUserFollows(loggedInUserFollows.filter(follower => follower.id !== followId))
     }
 
     const removePost = postId => {
@@ -122,59 +126,66 @@ const Profile = (props) => {
             sessionId={sessionId}
             navigateToProfile={navigateToProfile}
             setSessionId={setSessionId}
-
         />
-        {loaded && (
-            <div className="d-flex justify-content-around p-5 gap-4" style={{ backgroundImage: `url(${MilkyWay})`, marginTop: "7%"}}>
-                <div className="col-3">
-                    <SideBarProfile 
-                        userInfo={userInfo} 
-                        navigateToProfile={navigateToProfile}
-                        sessionId={sessionId}
-                    />
-                    <FollowList 
-                        allFollows={allFollows}
-                        removeFollow={removeFollow}
-                        userInfo={userInfo}
-                        sessionId={sessionId}
-                    />
-                </div>
-                <div className="col-6">
-                    { userInfo.id == sessionId ? 
-                        <div className="mb-3">
-                            <CreatePost
-                                sessionId={sessionId}
-                                setAllPosts={setAllPosts}
-                                allPosts={allPosts}
-                                userInfo={userInfo}
-                                navigateFunction={navigateToProfile}
-                            /> 
+        <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", paddingBottom: "20%" }}>
+            {loaded && (
+                <div >
+                    <div style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
+                        <SideBarProfile 
+                            userInfo={userInfo} 
+                            navigateToProfile={navigateToProfile}
+                            sessionId={sessionId}
+                            numberOfFollowers={allFollowers.length}
+                            numberOfFollows={allFollows.length}
+                            numberOfPosts={allPosts.length}
+                            isInProfile={isInProfile}
+                        />
+                    </div>
+
+                    <div className="d-flex justify-content-end p-5 gap-4">
+                        <div className="col-6" style={{marginRight: "27.75%", paddingLeft: "0.8%", paddingRight: "0.8%"}}>
+                            { userInfo.id == sessionId ? 
+                                <div className="mb-3">
+                                    <CreatePost
+                                        sessionId={sessionId}
+                                        setAllPosts={setAllPosts}
+                                        allPosts={allPosts}
+                                        userInfo={userInfo}
+                                        navigateFunction={navigateToProfile}
+                                    /> 
+                                </div>
+                                : null
+                            }
+                            <DisplayAllUserPosts
+                                userInfo={userInfo} 
+                                allPosts={allPosts} 
+                                sessionId={sessionId} 
+                                setAllPosts={setAllPosts}  
+                                navigateToProfile={navigateToProfile}
+                                loggedInUserFollows={loggedInUserFollows}
+                                removeFollow={removeFollow}
+                                addFollow={addFollow}
+                                loggedInUserLikes={loggedInUserLikes}
+                                addLike={addLike}
+                                removeLike={removeLike}
+                                removePost={removePost}
+                            />
                         </div>
-                        : null
-                    }
-                    <DisplayAllUserPosts
-                        userInfo={userInfo} 
-                        allPosts={allPosts} 
-                        sessionId={sessionId} 
-                        setAllPosts={setAllPosts}  
-                        navigateToProfile={navigateToProfile}
-                        loggedInUserFollows={loggedInUserFollows}
-                        removeFollow={removeFollow}
-                        addFollow={addFollow}
-                        loggedInUserLikes={loggedInUserLikes}
-                        addLike={addLike}
-                        removeLike={removeLike}
-                        removePost={removePost}
-                    />
+                        <div className="col-3" style={{ position: 'fixed'}}>
+                            <FollowList 
+                                allFollows={allFollows}
+                                removeFollow={removeFollow}
+                                userInfo={userInfo}
+                                sessionId={sessionId}
+                            />
+                            <Followers
+                                allFollowers={allFollowers}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div className="col-3">
-                    <Advertisement/>
-                    <Followers
-                        allFollowers={allFollowers}
-                    />
-                </div>
-            </div>
-        )}
+            )}
+        </div>
     </div>
   )
 }

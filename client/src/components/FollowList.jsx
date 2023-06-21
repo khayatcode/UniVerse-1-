@@ -32,29 +32,39 @@ const FollowList = (props) => {
     }
     return (
         <div className='border rounded p-3' style={{backgroundColor: "#f2f2f2"}}>
-            <h4 className=''>Following</h4>
+            <h4 className=''>{allFollows.length} Following</h4>
             <hr />
             <div className='d-flex flex-column' style={{height: "150px", overflowY: "scroll"}}>
-                {allFollows.map((follow, index) => {
+                {allFollows.length == 0 ?
+                    <div className='d-flex justify-content-center align-items-center' style={{height: "100%"}}>
+                        <h6 className='text-secondary'>No Follows</h6>
+                    </div>
+                : 
+                allFollows.map((follow, index) => {
                     return (
-                        <div>
-                            <div key={index} className='d-flex justify-content-around align-items-center mt-3'>
-                                <img src={follow.profile_pic} alt={follow.user_name} className='rounded-circle' style={{ width: '50px', height: '50px' }} />
-                                <h6>
-                                    <Link to={`/profile/${follow.id}`} className='text-decoration-underline text-dark'>{follow.user_name}</Link>
-                                </h6>
+                        <div key={index}>
+                            <div className='d-flex align-items-center mt-3'>
+                                <div className='d-flex align-items-center gap-4' style={{marginLeft: "6%"}}>
+                                    <img src={follow.profile_pic} alt={follow.user_name} className='rounded-circle' style={{ width: '50px', height: '50px' }} />
+                                    <h6>
+                                        <Link to={`/profile/${follow.id}`} className='text-decoration-underline text-dark'>{follow.user_name}</Link>
+                                    </h6>
+                                </div>
                                 { userInfo.id == sessionId ?
-                                    <form onSubmit={submitDeleteFollowHandler}>
-                                        <input type="hidden" name="user_id" value={sessionId}/>
-                                        <input type="hidden" name="follow_id" value={follow.id}/>
-                                        <input type="submit" value="UnFollow" className="btn btn-outline-danger btn-sm" style={{ fontWeight: 'bold' }}/>
-                                    </form>
+                                    <div style={{marginLeft: "20%"}}>
+                                        <form onSubmit={submitDeleteFollowHandler}>
+                                            <input type="hidden" name="user_id" value={sessionId}/>
+                                            <input type="hidden" name="follow_id" value={follow.id}/>
+                                            <input type="submit" value="UnFollow" className="btn btn-outline-danger btn-sm" style={{ fontWeight: 'bold' }}/>
+                                        </form>
+                                    </div>
                                 : null}
                             </div>
                             <hr />
                         </div>
                     )
-                })}
+                })
+                }
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import SideBarProfile from '../components/SideBarProfile'
@@ -19,6 +19,7 @@ const Dashboard = (props) => {
     const [loggedInUserFollows, setLoggedInUserFollows] = useState([])
     const [loggedInUserFollowers, setLoggedInUserFollowers] = useState([])
     const [loggedInUserLikes, setLoggedInUserLikes] = useState([])
+    const [loggedInUserPosts, setLoggedInUserPosts] = useState([])
     const [userInfo, setUserInfo] = useState({})
     const navigate = useNavigate()
 
@@ -33,15 +34,17 @@ useEffect(() => {
     fetch(`http://127.0.0.1:5000/get_all_followers/${sessionId}`),
     fetch('http://127.0.0.1:5000/get_all_posts_with_creator'),
     fetch(`http://127.0.0.1:5000/get_all_users_like_post/${sessionId}`),
+    fetch('http://127.0.0.1:5000/get_all_posts_by_user/' + sessionId),
   ])
   .then(responses => Promise.all(responses.map(response => response.json())))
   .then(data => {
-    const [userInfo, loggedInUserFollows, loggedInUserFollowers, allPosts, allUserLikes] = data;
+    const [userInfo, loggedInUserFollows, loggedInUserFollowers, allPosts, allUserLikes, loggedInUserPosts] = data;
     setUserInfo(userInfo);
     setLoggedInUserFollows(loggedInUserFollows);
     setLoggedInUserFollowers(loggedInUserFollowers);
     setAllPosts(allPosts);
     setLoggedInUserLikes(allUserLikes);
+    setLoggedInUserPosts(loggedInUserPosts);
     setLoaded(true);
   })
   .catch(err => {
@@ -59,6 +62,17 @@ useEffect(() => {
       console.log(err);
     });
   }, [loggedInUserLikes]);
+
+//   useEffect(() => {
+//   window.scrollTo({
+//     top: window.innerHeight / 2.7,
+//     behavior: "smooth"
+//   });
+// }, [allPosts]);
+
+// everytime a post is deleted, the page will scroll to the top of the page
+
+
     
     const removePost = postId => {
         setAllPosts(allPosts.filter(post => post.id !== postId))
@@ -88,55 +102,56 @@ useEffect(() => {
 
         
   return (
-    <div>
+    <div >
       <NavBar 
         sessionId={sessionId}
         setSessionId={setSessionId}
         navigateToProfile={navigateToProfile}
       />
-      {loaded && (
-        <div>
-          <div className='' style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
-            <SideBarProfile userInfo={userInfo} navigateToProfile={navigateToProfile} sessionId={sessionId}/>
-          </div>
-          <div className="d-flex justify-content-end p-5 gap-4" style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%"}}>
-            <div className="col-6">
-              <CreatePost 
-                sessionId={sessionId} 
-                allPosts={allPosts} 
-                setAllPosts={setAllPosts} 
+      <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", paddingBottom: "10%"}}>
+        {loaded && (
+          <div>
+            <div className='' style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
+              <SideBarProfile 
                 userInfo={userInfo} 
-                navigateFunction={navigateToDashboard}
-                />
-
-              <DisplayAllPosts 
-                allPosts={allPosts} 
-                sessionId={sessionId} 
-                removePost={removePost} 
-                loggedInUserFollows={loggedInUserFollows} 
-                setLoggedInUserFollows={setLoggedInUserFollows} 
-                navigateToProfile={navigateToProfile}
-                removeFollow={removeFollow}
-                addFollow={addFollow}
-                loggedInUserLikes={loggedInUserLikes}
-                addLike={addLike}
-                removeLike={removeLike}
-              />
-            </div>
-            <div className="col-3">
-            <FollowList 
-                allFollows={loggedInUserFollows}
-                removeFollow={removeFollow}
-                userInfo={userInfo}
+                navigateToProfile={navigateToProfile} 
                 sessionId={sessionId}
+                numberOfFollowers={loggedInUserFollowers.length}
+                numberOfFollows={loggedInUserFollows.length}
+                numberOfPosts={loggedInUserPosts.length}
                 />
-            <Followers 
-              allFollowers={loggedInUserFollowers}
-              />
+            </div>
+            <div className="d-flex justify-content-end p-5 ">
+              <div className="col-6" style={{marginRight: "1.9%"}}>
+                <CreatePost 
+                  sessionId={sessionId} 
+                  allPosts={allPosts} 
+                  setAllPosts={setAllPosts} 
+                  userInfo={userInfo} 
+                  navigateFunction={navigateToDashboard}
+                  />
+
+                <DisplayAllPosts 
+                  allPosts={allPosts} 
+                  sessionId={sessionId} 
+                  removePost={removePost} 
+                  loggedInUserFollows={loggedInUserFollows} 
+                  setLoggedInUserFollows={setLoggedInUserFollows} 
+                  navigateToProfile={navigateToProfile}
+                  removeFollow={removeFollow}
+                  addFollow={addFollow}
+                  loggedInUserLikes={loggedInUserLikes}
+                  addLike={addLike}
+                  removeLike={removeLike}
+                />
+              </div>
+              <div className="col-3">
+                <Advertisement />
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }

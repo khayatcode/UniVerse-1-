@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import MilkyWay from '../images/milkyWay.jpeg'
 
@@ -96,9 +96,13 @@ const Reg = (props) => {
             });
     };
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, []);
+
     return (
         <div>
-                <div style={{backgroundImage: `url(${MilkyWay})`, height: "150vh"}}>
+                <div style={{backgroundImage: `url(${MilkyWay})`, paddingBottom: "10%"}}>
                     <h1 className='' style={{ color: "white", backgroundColor: 'transparent', fontWeight: 300, padding: '35px' }}>UniVerse</h1>
                     <div className="d-flex justify-content-center align-items-center" >
                         <div className="col-4 row rounded p-3 mb-3" style={{ backgroundColor: '#f2f2f2' }}>

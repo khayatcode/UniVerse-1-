@@ -30,11 +30,11 @@ const DisplayUserPost = (props) => {
                 return (
                     <div key={index} className='mb-3'>
                         <div className="card">
-                            <div className="card-body" style={{ backgroundColor: "#f2f2f2" }}>
+                            <div className="card-body rounded" style={{ backgroundColor: "#f2f2f2" }}>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex justify-content-around align-items-center gap-3">
                                         <img src={userInfo.profile_pic} alt={userInfo.user_name} className='rounded-circle' style={{ width: '65px', height: '65px' }} />
-                                        <h6 className="card-title mb-2"><strong><em>{userInfo.user_name}</em></strong></h6>
+                                        <h6 className="card-title mb-2"><strong>{userInfo.user_name}</strong></h6>
                                     </div>
                                     <AddFollow
                                         sessionId={sessionId}
@@ -46,7 +46,8 @@ const DisplayUserPost = (props) => {
                                 </div>
                                 <hr />
                                 <p className="card-text text-start mt-1">{post.content}</p>
-                                <img src={post.post_pic} className="card-img-top rounded" alt="Post Pic" />
+                                {post.post_pic == '' ? null : <img src={post.post_pic} className="card-img-top rounded img-fluid" alt="Post Pic" style={{height: "350px", width : "auto"}}/>}
+                                <hr />
                                 <div className='d-flex justify-content-between align-items-center mt-3'>
                                     <div className='d-block'>
                                         <div className='d-flex gap-2 align-items-center'>
@@ -75,7 +76,7 @@ const DisplayUserPost = (props) => {
 
                 )
             })
-            ) : <h3 className='text-white'>No Posts Yet</h3>}
+            ) : <h3 className='text-white mt-5'>No Posts Yet</h3>}
         </div>
     )
 }
