@@ -65,10 +65,10 @@ const Log = (props) => {
         <div>
             {/* <div className="row p-2 text-centre" style={{backgroundColor: "#483D8B" }}>
             </div> */}
-            <div style={{backgroundImage: `url(${MilkyWay})`, paddingBottom: "20%" }}>
+            <div style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh" }}>
                 <h1 className='' style={{ color: "white", backgroundColor: 'transparent', fontWeight: 300, padding: '35px' }}>UniVerse</h1>
                 <div className="d-flex justify-content-center align-items-center" style={{ marginTop: '100px' }}>
-                    <div className="col-6 row rounded-3 p-4" style={{ backgroundColor: "#f2f2f2" }}>
+                    <div className="col-8 row rounded-3 p-4" style={{ backgroundColor: "#f2f2f2" }}>
                         <div className="row mb-3">
                             <div className="col">
                                 <h5><strong>Login to Your UniVerse</strong></h5>

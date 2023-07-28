@@ -54,7 +54,7 @@ useEffect(() => {
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/get_all_posts_with_creator')
-    .then(response => response.json())
+    .then(data => data.json())
     .then(data => {
       setAllPosts(data)
     })
@@ -112,7 +112,7 @@ useEffect(() => {
       />
       <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", paddingBottom: "10%"}}>
         {loaded && (
-          <div>
+          <div> 
             <div className='' style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
               <SideBarProfile 
                 userInfo={userInfo} 

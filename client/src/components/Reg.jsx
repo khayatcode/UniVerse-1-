@@ -59,6 +59,7 @@ const Reg = (props) => {
         formData.append("password", userInfo.password);
         formData.append("confirm_password", userInfo.confirm_password);
         formData.append("profile_pic", userInfo.profile_pic);
+        console.log("profile_pic", userInfo.profile_pic);
 
         fetch("http://127.0.0.1:5000/register", {
             method: "POST",
@@ -102,10 +103,10 @@ const Reg = (props) => {
 
     return (
         <div>
-                <div style={{backgroundImage: `url(${MilkyWay})`, paddingBottom: "10%"}}>
+                <div style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh"}}>
                     <h1 className='' style={{ color: "white", backgroundColor: 'transparent', fontWeight: 300, padding: '35px' }}>UniVerse</h1>
                     <div className="d-flex justify-content-center align-items-center" >
-                        <div className="col-4 row rounded p-3 mb-3" style={{ backgroundColor: '#f2f2f2' }}>
+                        <div className="col-8 row rounded p-3 mb-3" style={{ backgroundColor: '#f2f2f2' }}>
                             <div className="row mb-3">
                                 <div className="col">
                                     <h5><strong>Register Your UniVerse</strong></h5>
