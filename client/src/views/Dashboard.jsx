@@ -110,7 +110,7 @@ useEffect(() => {
         setSessionId={setSessionId}
         navigateToProfile={navigateToProfile}
       />
-      <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", paddingBottom: "10%"}}>
+      <div style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh", paddingTop: "5%"}}>
         {loaded && (
           <div> 
             <div className='' style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
