@@ -50,21 +50,22 @@ const SideBarProfile = (props) => {
               <div>
                 <hr />
                 <div>
-                  <Link to={`/dashboard/${sessionId}`} className="btn text-white" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}}>Explore</Link>
+                  <Link to={`/dashboard/${sessionId}`} className="btn text-white sideBarBtn" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}}>Explore</Link>
                 </div>
               </div>
-            : userInfo.id == sessionId ?
+            : 
+            userInfo.id == sessionId ?
               <div>
                 <hr />
                 <div>
-                  <button className="btn btn-sm text-white" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}} onClick={(e) => navigateToProfile(userInfo.id)}>View Profile</button>
+                  <button className="btn text-white sideBarBtn" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}} onClick={(e) => navigateToProfile(userInfo.id)}>View Profile</button>
                 </div>
               </div>
             :
               <div>
                 <hr />
                 <div>
-                  <Link to={`/dashboard/${sessionId}`} className="btn text-white" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}}>Explore</Link>
+                  <Link to={`/dashboard/${sessionId}`} className="btn text-white sideBarBtn" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}}>Explore</Link>
                 </div>
               </div>
           }

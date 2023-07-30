@@ -7,39 +7,26 @@
 }
 
 .card-subtitle{
-    font-size: 1.2rem;
+    font-size: 1vw;
 }
 
 .card-text{
-    font-size: 1rem;
+    font-size: 0.9vw;
 }
 
-@media (max-width: 1110px) {
-    .card-subtitle{
-        font-size: 1rem;
-    }
-    .card-text{
-        font-size: 0.8rem;
-    }
-    
+.sideBarBtn{
+    font-size: 0.9vw;
 }
 
-@media (max-width: 930px) {
+@media (max-width: 900px) {
     .card-subtitle{
-        font-size: 0.8rem;
+        font-size: 1.3vw;
     }
     .card-text{
-        font-size: 0.6rem;
+        font-size: 1.1vw;
     }
-    
-}
-
-@media (max-width: 790px) {
-    .card-subtitle{
-        font-size: 0.6rem;
-    }
-    .card-text{
-        font-size: 0.5rem;
+    .sideBarBtn{
+        font-size: 1.3vw;
     }
 
     .sideBarPic {
