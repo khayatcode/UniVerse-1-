@@ -21,10 +21,24 @@
     object-fit: cover;
     object-position: center;
 }
+
+.postLikes {
+    font-size: 12px;
+}
+
+.postActionBtn{
+    font-size: 15px;
+}
 @media (max-width: 1200px){
     .postProfilePic{
         width: 60px;
         height: 60px;
+    }
+    .postActionBtn{
+        font-size: 10px;
+    }
+    .postLikes {
+        font-size: 10px;
     }
 }
 
@@ -38,5 +52,11 @@
     } 
     .postUserBtn{
         font-size: 1.2vw;
+    }
+    .postActionBtn{
+        font-size: 1vw;
+    }
+    .postLikes {
+        font-size: 1vw;
     }
 }

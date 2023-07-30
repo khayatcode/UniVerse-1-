@@ -59,16 +59,16 @@ const DisplayAllPosts = (props) => {
                                                 addLike={addLike}
                                                 removeLike={removeLike}
                                             />
-                                            <p className="card-text">Likes: {post.likes}</p>
+                                            <p className="card-text postLikes">Likes: {post.likes}</p>
                                         </div>
                                     </div>
                                     <div >
-                                        <button className="btn btn-sm text-white" style={{backgroundColor: "#8c8c8c"}} onClick={(e) => navigateToViewPost(post.id, post.creator.id)}>View/Comment</button>
+                                        <button className="btn text-white postActionBtn" style={{backgroundColor: "#8c8c8c"}} onClick={(e) => navigateToViewPost(post.id, post.creator.id)}>View/Comment</button>
                                     </div>
                                 </div>
                                 {post.creator.id == sessionId ?
-                                    <div className='d-flex justify-content-center gap-2 mt-2'>
-                                        <button className="btn btn-sm text-white" style={{backgroundColor: "#483D8B"}} onClick={(e) => navigateToEdit(post.id)}>Edit</button>
+                                    <div className='d-flex justify-content-center gap-2 mt-4'>
+                                        <button className="btn text-white postActionBtn" style={{backgroundColor: "#483D8B"}} onClick={(e) => navigateToEdit(post.id)}>Edit</button>
                                         <DeletePost successCallback={() => removePost(post.id)} postId={post.id} />
                                     </div> : null}
                             </div>
