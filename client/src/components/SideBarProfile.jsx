@@ -23,28 +23,28 @@ const SideBarProfile = (props) => {
           <img className='sideBarPic' src={userInfo.profile_pic}/>
           <hr />
           <div className="d-flex align-items-center gap-3 overflow-auto">
-            <h6 className="card-subtitle" style={{marginLeft: "10%"}}><strong>Username:</strong></h6>
-            <p className="card-text mb-1">{userInfo.user_name}</p>
+            <h6 className="card-subtitle cardFont" style={{marginLeft: "10%"}}><strong>Username:</strong></h6>
+            <p className="card-text mb-1 cardFont2">{userInfo.user_name}</p>
           </div>
           <hr />
           <div className="d-flex align-items-center gap-3 overflow-auto">
-            <h6 className="card-subtitle" style={{marginLeft: "10%"}} ><strong>Occupation:</strong></h6>
-            <p className="card-text mb-1">{userInfo.occupation}</p>
+            <h6 className="card-subtitle cardFont" style={{marginLeft: "10%"}} ><strong>Occupation:</strong></h6>
+            <p className="card-text mb-1 cardFont2">{userInfo.occupation}</p>
           </div>
           <hr />
           <div className="d-flex align-items-center gap-3 overflow-auto">
-            <h6 className="card-subtitle " style={{marginLeft: "10%"}}><strong>Followers:</strong></h6>
-            <p className="card-text mb-1">{numberOfFollowers}</p>
+            <h6 className="card-subtitle cardFont" style={{marginLeft: "10%"}}><strong>Followers:</strong></h6>
+            <p className="card-text mb-1 cardFont2">{numberOfFollowers}</p>
           </div>
           <hr />
           <div className="d-flex align-items-center gap-3 overflow-auto">
-            <h6 className="card-subtitle " style={{marginLeft: "10%"}}><strong>Following:</strong></h6>
-            <p className="card-text mb-1">{numberOfFollows}</p>
+            <h6 className="card-subtitle cardFont" style={{marginLeft: "10%"}}><strong>Following:</strong></h6>
+            <p className="card-text mb-1 cardFont2">{numberOfFollows}</p>
           </div>
           <hr />
           <div className="d-flex align-items-center gap-3 overflow-auto">
-            <h6 className="card-subtitle " style={{marginLeft: "10%"}}><strong>Posts:</strong></h6>
-            <p className="card-text mb-1">{numberOfPosts}</p>
+            <h6 className="card-subtitle cardFont" style={{marginLeft: "10%"}}><strong>Posts:</strong></h6>
+            <p className="card-text mb-1 cardFont2">{numberOfPosts}</p>
           </div>
           {isInProfile ?
               <div>

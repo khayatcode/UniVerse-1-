@@ -6,11 +6,11 @@
     object-position: center;
 }
 
-.card-subtitle{
+.cardFont{
     font-size: 1vw;
 }
 
-.card-text{
+.cardFont2{
     font-size: 0.9vw;
 }
 
@@ -19,10 +19,10 @@
 }
 
 @media (max-width: 900px) {
-    .card-subtitle{
+    .cardFont{
         font-size: 1.3vw;
     }
-    .card-text{
+    .cardFont2{
         font-size: 1.1vw;
     }
     .sideBarBtn{

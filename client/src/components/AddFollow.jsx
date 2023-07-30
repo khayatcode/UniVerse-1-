@@ -68,13 +68,13 @@ const AddFollow = ({ sessionId, post, loggedInUserFollows, removeFollow , addFol
                     <form onSubmit={submitDeleteFollowHandler}>
                         <input type="hidden" name="user_id" value={sessionId}/>
                         <input type="hidden" name="follow_id" value={post.user_id}/>
-                        <input type="submit" value="UnFollow" className="btn btn-outline-danger" style={{ fontWeight: 'bold' }}/>
+                        <input type="submit" value="UnFollow" className="btn postUserBtn btn-outline-danger" style={{ fontWeight: 'bold' }}/>
                     </form>
                     :
                     <form onSubmit={submitAddFollowHandler}>
                         <input type="hidden" name="user_id" value={sessionId}/>
                         <input type="hidden" name="follow_id" value={post.user_id}/>
-                        <input type="submit" value="Follow" className="btn btn-outline-primary" style={{ fontWeight: 'bold' }}/>
+                        <input type="submit" value="Follow" className="btn postUserBtn btn-outline-primary" style={{ fontWeight: 'bold' }}/>
                     </form>)
                 : null}
         </div>
