@@ -1,0 +1,11 @@
+.AdvText,
+.AdvTitle{
+    font-size: 1vw;
+}
+
+@media (max-width: 700px){
+    .AdvText,
+    .AdvTitle{
+        font-size: 1.3vw;
+    }
+}
