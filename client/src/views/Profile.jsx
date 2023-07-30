@@ -127,10 +127,10 @@ const Profile = (props) => {
             navigateToProfile={navigateToProfile}
             setSessionId={setSessionId}
         />
-        <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", paddingBottom: "20%" }}>
+        <div style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh", paddingTop: "150px" }}>
             {loaded && (
-                <div >
-                    <div style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
+                <div className='container-fluid'>
+                    <div style={{width: "25%", position: 'fixed', marginLeft: "1.9%", marginTop: "48px" }}>
                         <SideBarProfile 
                             userInfo={userInfo} 
                             navigateToProfile={navigateToProfile}
@@ -142,8 +142,8 @@ const Profile = (props) => {
                         />
                     </div>
 
-                    <div className="d-flex justify-content-end p-5 gap-4">
-                        <div className="col-6" style={{marginRight: "27.75%", paddingLeft: "0.8%", paddingRight: "0.8%"}}>
+                    <div className="d-flex justify-content-end p-5">
+                        <div className="col-6" style={{width: "50%", marginRight: "1.9%"}}>
                             { userInfo.id == sessionId ? 
                                 <div className="mb-3">
                                     <CreatePost

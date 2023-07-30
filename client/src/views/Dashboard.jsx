@@ -110,10 +110,10 @@ useEffect(() => {
         setSessionId={setSessionId}
         navigateToProfile={navigateToProfile}
       />
-      <div style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh", paddingTop: "5%"}}>
+      <div style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh", paddingTop: "150px"}}>
         {loaded && (
-          <div> 
-            <div className='' style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
+          <div className='container-fluid'> 
+            <div className='bg-warning' style={{width: "25%", position: 'fixed', marginLeft: "1.9%", marginTop: "48px" }}>
               <SideBarProfile 
                 userInfo={userInfo} 
                 navigateToProfile={navigateToProfile} 
@@ -124,7 +124,7 @@ useEffect(() => {
                 />
             </div>
             <div className="d-flex justify-content-end p-5 ">
-              <div className="col-6" style={{marginRight: "1.9%"}}>
+              <div className="bg-danger" style={{width: "50%", marginRight: "1.9%"}}>
                 <CreatePost 
                   sessionId={sessionId} 
                   allPosts={allPosts} 
@@ -147,7 +147,7 @@ useEffect(() => {
                   removeLike={removeLike}
                 />
               </div>
-              <div className="col-3">
+              <div className="bg-info" style={{width: "20%"}}>
                 <Advertisement />
               </div>
             </div>

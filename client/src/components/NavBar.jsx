@@ -27,13 +27,13 @@ const NavBar = (props) => {
   return (
     <div>
       <nav className='navbar navbar-expand-xl p-4 fixed-top' style={{ backgroundImage: `url(${MilkyWay})` }}>
-        <div className='container d-flex justify-content-between'>
-          <button className='navbar-brand display-1 text-white' style={{ fontSize: '38px', marginLeft: '1rem', backgroundColor: 'transparent', border: 'none' }} onClick={(e) => { navigateToDashboard(sessionId); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>UniVerse</button>
+        <div className='container-fluid gap-3'>
+          <button className='navbar-brand display-5 text-white' style={{fontSize: '3rem', backgroundColor: 'transparent', border: 'none' }} onClick={(e) => { navigateToDashboard(sessionId); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>UniVerse</button>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <ul className='navbar-nav gap-3 justify-content-evenly'>
+            <ul className='navbar-nav gap-5'>
               <li className='nav-item'>
                 <button className='btn btn-outline-light' onClick={(e) => { navigateToDashboard(sessionId); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ fontWeight: 'bold' }}>Explore</button>
               </li>

@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import '../styles/SideBarProfile.css'
 
 
 
@@ -16,34 +17,34 @@ const SideBarProfile = (props) => {
 
 
   return (
-    <div className='d-flex align-items-center mb-3' style={{marginTop: "0.7%"}}>
-      <div className="card" style={{ width: '400px' }}>
-        <div className="card-body rounded" style={{backgroundColor: "#f2f2f2"}}>
-          <img src={userInfo.profile_pic} height={100} width={100} style={{ borderRadius: '50%'}} />
+    <div className='d-flex align-items-center'>
+      <div className="card " style={{width: "100%", backgroundColor: "#f2f2f2"}}>
+        <div className="card-body rounded">
+          <img className='sideBarPic' src={userInfo.profile_pic}/>
           <hr />
-          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
-            <h6 className="card-title "><strong>User Name:</strong></h6>
-            <p className="card-text mb-1" style={{marginRight: "20%"}}>{userInfo.user_name}</p>
+          <div className="d-flex align-items-center gap-3 overflow-auto">
+            <h6 className="card-subtitle" style={{marginLeft: "10%"}}><strong>Username:</strong></h6>
+            <p className="card-text mb-1">{userInfo.user_name}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
-            <h6 className="card-subtitle "><strong>Occupation:</strong></h6>
-            <p className="card-text mb-1" style={{marginRight: "20%"}}>{userInfo.occupation}</p>
+          <div className="d-flex align-items-center gap-3 overflow-auto">
+            <h6 className="card-subtitle" style={{marginLeft: "10%"}} ><strong>Occupation:</strong></h6>
+            <p className="card-text mb-1">{userInfo.occupation}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
-            <h6 className="card-subtitle "><strong>Followers:</strong></h6>
-            <p className="card-text mb-1" style={{marginRight: "20%"}}>{numberOfFollowers}</p>
+          <div className="d-flex align-items-center gap-3 overflow-auto">
+            <h6 className="card-subtitle " style={{marginLeft: "10%"}}><strong>Followers:</strong></h6>
+            <p className="card-text mb-1">{numberOfFollowers}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
-            <h6 className="card-subtitle "><strong>Following:</strong></h6>
-            <p className="card-text mb-1" style={{marginRight: "20%"}}>{numberOfFollows}</p>
+          <div className="d-flex align-items-center gap-3 overflow-auto">
+            <h6 className="card-subtitle " style={{marginLeft: "10%"}}><strong>Following:</strong></h6>
+            <p className="card-text mb-1">{numberOfFollows}</p>
           </div>
           <hr />
-          <div className="d-flex align-items-center justify-content-between overflow-auto" style={{marginLeft: "10%"}}>
-            <h6 className="card-subtitle "><strong>Posts:</strong></h6>
-            <p className="card-text mb-1" style={{marginRight: "20%"}}>{numberOfPosts}</p>
+          <div className="d-flex align-items-center gap-3 overflow-auto">
+            <h6 className="card-subtitle " style={{marginLeft: "10%"}}><strong>Posts:</strong></h6>
+            <p className="card-text mb-1">{numberOfPosts}</p>
           </div>
           {isInProfile ?
               <div>
@@ -56,7 +57,7 @@ const SideBarProfile = (props) => {
               <div>
                 <hr />
                 <div>
-                  <button className="btn text-white" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}} onClick={(e) => navigateToProfile(userInfo.id)}>View Profile</button>
+                  <button className="btn btn-sm text-white" style={{fontWeight: 'bold', backgroundColor: "#483D8B"}} onClick={(e) => navigateToProfile(userInfo.id)}>View Profile</button>
                 </div>
               </div>
             :
