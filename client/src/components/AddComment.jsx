@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import "../styles/CreatePost.css"
 
 const AddComment = (props) => {
     const {postId, sessionId, loggedInUserData, addCommentToPost} = props
@@ -66,12 +67,12 @@ const AddComment = (props) => {
   return (
     <div>
         <div className='border rounded p-3' style={{backgroundColor: "#f2f2f2"}}>
-            {errors.description ? <p className="text-danger">{errors.description}</p> : null}
-            <p className='text-start'>Add Comment:</p>
+            {errors.description ? <p className="text-danger formText">{errors.description}</p> : null}
+            <p className='text-start formText'>Add Comment:</p>
             <form onSubmit={submitCommentHandler}>
                 <div className="form-group">
                     <textarea
-                        className="form-control"
+                        className="form-control formText"
                         rows="3"
                         name="description"
                         value={comment.description}
@@ -81,7 +82,7 @@ const AddComment = (props) => {
                     <input type="hidden" name="user_id" value={sessionId} />
                     <input type="hidden" name="post_id" value={postId} />
                 </div>
-                <input type="submit" value="Comment" className="btn mt-3 col-3 text-white" style={{ fontWeight: 'bold', backgroundColor: "#483D8B" }} />
+                <input type="submit" value="Comment" className="btn mt-3 col-3 text-white formText" style={{ fontWeight: 'bold', backgroundColor: "#483D8B" }} />
             </form>
 
 

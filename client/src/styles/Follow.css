@@ -1,0 +1,37 @@
+.followTitle{
+    font-size: 1vw;
+    font-weight: bold;
+}
+
+.followText{
+    font-size: 0.8vw;
+}
+
+.followPic{
+    width: 50px;
+    height: 50px;
+}
+
+.followBtn{
+    font-size: 0.6vw;
+}
+
+@media (max-width: 900px){
+    .followTitle{
+        font-size: 1.5vw;
+    }
+    .followText{
+        font-size: 1vw;
+    }
+    .followPic{
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 650px){
+    .followPic{
+        width: 20px;
+        height: 20px;
+    }
+}

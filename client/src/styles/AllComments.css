@@ -1,0 +1,40 @@
+.commentTitle{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.commentUserPic{
+    width: 50px;
+    height: 50px;
+}
+
+.commentUserProfile,
+.commentUserText{
+    font-size: 1rem;
+}
+
+.commentDeleteBtn{
+    font-size: 0.8rem;
+}
+
+
+@media (max-width: 1000px){
+    .commentTitle{
+        font-size: 2.3vw;
+    }
+    .commentUserProfile{
+        font-size: 0.8rem;
+    }
+    .commentUserText{
+        font-size: 0.8rem;
+    }
+    .commentDeleteBtn{
+        font-size: 1vw;
+    }
+}
+
+@media (max-width: 700px){
+    .commentUserText{
+        font-size: 0.6rem;
+    }
+}

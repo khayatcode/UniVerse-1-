@@ -93,9 +93,9 @@ const EditProfile = (props) => {
                 navigateToProfile={navigateToProfile}
                 setSessionId={setSessionId}
             />
-            <div style={{backgroundImage: `url(${MilkyWay})`, marginTop: "7%", paddingBottom: "10%" }}>
+            <div className='container-fluid' style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh", paddingTop: "150px"}}>
                 <div className='d-flex justify-content-center align-items-center'>
-                    <div className="col-6 row rounded p-3 mb-5" style={{ backgroundColor: '#D3D3D3', marginTop: "5%" }}>
+                    <div className="col-8 row rounded p-3 mb-5" style={{ backgroundColor: '#D3D3D3', marginTop: "5%" }}>
                         <h5 className='mb-3'><strong>Edit Your UniVerse</strong></h5>
                         <form onSubmit={submitHandler}>
                             {Object.keys(errors).length > 0 ?
@@ -126,7 +126,7 @@ const EditProfile = (props) => {
                                 <input onChange={changeHandler} type="text" name="occupation" className="form-control" value={userInfo.occupation} placeholder='Occupation'/>
                                 <label className="form-label">Occupation</label>
                             </div>
-                            <input type="submit" value="Update" className="btn text-white col-4" style={{ backgroundColor: '#483D8B' }} />
+                            <input type="submit" value="Update" className="btn btn-sm text-white" style={{ backgroundColor: '#483D8B', width: "30%" }} />
                         </form>
                     </div>
                 </div>

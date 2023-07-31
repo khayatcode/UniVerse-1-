@@ -6,6 +6,7 @@ import SideBarProfile from './SideBarProfile'
 import DisplaySinglePost from './DisplaySinglePost';
 import Cookies from 'js-cookie';
 import MilkyWay from '../images/milkyWay.jpeg'
+import "../styles/CreatePost.css"
 
 
 
@@ -126,9 +127,10 @@ const EditPost = (props) => {
             navigateToProfile={navigateToProfile}
             setSessionId={setSessionId}
         />
+      <div className='pb-3' style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh", paddingTop: "150px" }}>
       {loaded && (
-        <div style={{backgroundImage: `url(${MilkyWay})`, paddingBottom: "20%" }}>
-          <div style={{ position: 'fixed', margin: "3.2%", width: "20%" }}>
+        <div className="container-fluid">
+          <div style={{ width: "23%", position: 'fixed' }}>
             <SideBarProfile
                 userInfo={userInfo}
                 sessionId={sessionId}
@@ -138,23 +140,23 @@ const EditPost = (props) => {
                 numberOfPosts={loggedInUserPosts.length}
               />
           </div>
-          <div className='d-flex justify-content-end p-5 gap-4' style={{ marginTop: "7%", marginLeft: "8%"}}>
-              <div className="col-6" style={{marginRight: "27.75%"}}>
+          <div className="d-flex justify-content-center">
+              <div style={{ width: "65%", marginLeft: "23%" }}>
                 <div className='border rounded p-3 mb-3' style={{backgroundColor: "#f2f2f2"}}>
-                  <h6>Edit Post:</h6>
                   {errors.content ? 
-                      <p className="text-danger">{errors.content}</p>
+                      <p className="text-danger formText">{errors.content}</p>
                       : null
                   }
+                  <h6 className='formText'>Edit Post:</h6>
                   <form onSubmit={submitHandler}>
                       <div className="form-group">
                           <textarea
-                              className="form-control"
+                              className="form-control formText"
                               name="content"
                               value={updatedPostInfo.content}
                               onChange={changeHandler}
                           />
-                          <input type="submit" value="Update Post" className="btn mt-2 text-white" style={{ fontWeight: 'bold', backgroundColor: "#483D8B" }}/>
+                          <input type="submit" value="Update Post" className="btn mt-2 text-white formText" style={{ fontWeight: 'bold', backgroundColor: "#483D8B" }}/>
                       </div>
                   </form>
                 </div>
@@ -174,7 +176,8 @@ const EditPost = (props) => {
           </div>
         </div>
       )
-        }
+    }
+    </div>
     </div>
   )
 }

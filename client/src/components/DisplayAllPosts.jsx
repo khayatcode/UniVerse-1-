@@ -26,7 +26,7 @@ const DisplayAllPosts = (props) => {
         <div>
             {sortPosts(allPosts).length > 0 ? (allPosts.map((post, index) => {
                 return (
-                    <div key={index} className='mt-3'>
+                    <div key={index} className='mb-3'>
                         <div className="card">
                             <div className="card-body rounded" style={{backgroundColor: "#f2f2f2"}}>
                                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">

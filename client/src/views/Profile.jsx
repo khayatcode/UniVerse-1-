@@ -130,7 +130,7 @@ const Profile = (props) => {
         <div style={{backgroundImage: `url(${MilkyWay})`, minHeight: "100vh", paddingTop: "150px" }}>
             {loaded && (
                 <div className='container-fluid'>
-                    <div style={{width: "25%", position: 'fixed', marginLeft: "1.9%", marginTop: "48px" }}>
+                    <div className='' style={{width: "23%", position: 'fixed' }}>
                         <SideBarProfile 
                             userInfo={userInfo} 
                             navigateToProfile={navigateToProfile}
@@ -142,10 +142,10 @@ const Profile = (props) => {
                         />
                     </div>
 
-                    <div className="d-flex justify-content-end p-5">
-                        <div className="col-6" style={{width: "50%", marginRight: "1.9%"}}>
+                    <div className="d-flex justify-content-end ">
+                        <div className='postContainer' style={{width: "50%"}}>
                             { userInfo.id == sessionId ? 
-                                <div className="mb-3">
+                                <div className="">
                                     <CreatePost
                                         sessionId={sessionId}
                                         setAllPosts={setAllPosts}
@@ -171,7 +171,7 @@ const Profile = (props) => {
                                 removePost={removePost}
                             />
                         </div>
-                        <div className="col-3" style={{ position: 'fixed'}}>
+                        <div className="" style={{ width: "23%", marginLeft: "1.8%"}}>
                             <FollowList 
                                 allFollows={allFollows}
                                 removeFollow={removeFollow}

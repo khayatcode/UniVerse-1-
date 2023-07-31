@@ -79,7 +79,7 @@ const CreatePost = (props) => {
 
 
   return (
-    <div className='border rounded p-3' style={{backgroundColor: "#f2f2f2"}}>
+    <div className='border rounded p-3 mb-3' style={{backgroundColor: "#f2f2f2"}}>
         {errors.content ? 
             <p className="text-danger formText">{errors.content}</p>
             : null

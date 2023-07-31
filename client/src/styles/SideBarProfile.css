@@ -1,6 +1,6 @@
 .sideBarPic{
-    width: 40%;
-    height: 40%;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
@@ -18,6 +18,13 @@
     font-size: 0.9vw;
 }
 
+@media (max-width: 1000px) {
+    .sideBarPic{
+        width: 100px;
+        height: 100px;
+    }
+}
+
 @media (max-width: 900px) {
     .cardFont{
         font-size: 1.3vw;
@@ -28,18 +35,19 @@
     .sideBarBtn{
         font-size: 1.3vw;
     }
+}
 
+@media (max-width: 700px) {
     .sideBarPic {
-        width: 60%;
-        height: 60%;
+        width: 65px;
+        height: 65px;
     }
 }
 
-@media (max-width: 600px) {
-
+@media (max-width: 400px){
     .sideBarPic {
-        width: 70%;
-        height: 70%;
+        width: 40px;
+        height: 40px;
     }
 }
 
