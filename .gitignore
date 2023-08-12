@@ -168,3 +168,10 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/flask
+
+# Client (React) build files
+node_modules/
+coverage/
+build/
+.DS_Store
+.env
