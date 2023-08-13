@@ -4,8 +4,3 @@
   to = "http://52.23.163.231:5000/:splat"
   status = 200
 
-[build]
-  base = "client"  # Set the base directory to 'client'
-  command = "npm run build"  # Adjust the build command if needed
-  publish = "client/build"  # Set the publish directory to the built files
-
