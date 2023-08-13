@@ -1,0 +1,7 @@
+[build]
+functions = "lambda"
+
+[[redirects]]
+from = "/api/*"
+to = "http://52.23.163.231:5000/:splat"
+status = 200
