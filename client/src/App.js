@@ -32,6 +32,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<h1>Home</h1>} />
         <Route path="/register" element={<Reg sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/login" element={<Log sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/dashboard/:sessionId" element={<Dashboard sessionId={sessionId} setSessionId={setSessionId}/>} />
