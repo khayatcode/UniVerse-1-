@@ -29,8 +29,8 @@ const NavBar = (props) => {
       <nav className='navbar navbar-expand-xl p-4 fixed-top' style={{ backgroundImage: `url(${MilkyWay})` }}>
         <div className='container-fluid gap-3'>
           <button className='navbar-brand display-5 text-white' style={{fontSize: '3rem', backgroundColor: 'transparent', border: 'none' }} onClick={(e) => { navigateToDashboard(sessionId); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>UniVerse</button>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul className='navbar-nav gap-5'>

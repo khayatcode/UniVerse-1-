@@ -23,7 +23,7 @@ const AddComment = (props) => {
 
     const submitCommentHandler = (e) => {
         e.preventDefault()
-        fetch(`http://127.0.0.1:5000/create_comment`, {
+        fetch(`/create_comment`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

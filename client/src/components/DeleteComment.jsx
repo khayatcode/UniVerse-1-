@@ -5,7 +5,7 @@ const DeleteComment = (props) => {
 
     const deleteComment = (e) => {
         e.preventDefault()
-        fetch(`http://127.0.0.1:5000/delete_comment/${commentId}`, {
+        fetch(`/delete_comment/${commentId}`, {
             method: "DELETE"
         })
         .then(response => {

@@ -8,7 +8,7 @@ const AddFollow = ({ sessionId, post, loggedInUserFollows, removeFollow , addFol
 
     const submitAddFollowHandler = (e) => {
         e.preventDefault()
-        fetch("http://127.0.0.1:5000/follow_user", {
+        fetch("/follow_user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -35,7 +35,7 @@ const AddFollow = ({ sessionId, post, loggedInUserFollows, removeFollow , addFol
 
     const submitDeleteFollowHandler = (e) => {
         e.preventDefault()
-        fetch("http://127.0.0.1:5000/unfollow", {
+        fetch("/unfollow", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -5,7 +5,7 @@ const DeletePost = (props) => {
 
     const deletePost = (e) => {
         e.preventDefault()
-        fetch("http://127.0.0.1:5000/delete_post/" + postId, {
+        fetch("/delete_post/" + postId, {
             method: "DELETE"
         })
         .then(response => {

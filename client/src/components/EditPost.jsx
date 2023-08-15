@@ -37,17 +37,17 @@ const EditPost = (props) => {
   }
 
   useEffect(() => {
-    const userSession = Cookies.get('sessionId');
-    if (!userSession) {
-      navigate('/login');
-    }
+    if (Cookies.get('sessionId') == "") {
+      console.log("redirecting to login")
+      return navigate('/login')
+  }
     Promise.all([
-      fetch(`http://127.0.0.1:5000/get_user/${sessionId}`),
-      fetch(`http://127.0.0.1:5000/get_one_post/${postId}`),
-      fetch(`http://127.0.0.1:5000/get_all_users_like_post/${sessionId}`),
-      fetch(`http://127.0.0.1:5000/get_all_follows/${sessionId}`),
-      fetch(`http://127.0.0.1:5000/get_all_followers/${sessionId}`),
-      fetch('http://127.0.0.1:5000/get_all_posts_by_user/' + sessionId),
+      fetch(`/get_user/${sessionId}`),
+      fetch(`/get_one_post/${postId}`),
+      fetch(`/get_all_users_like_post/${sessionId}`),
+      fetch(`/get_all_follows/${sessionId}`),
+      fetch(`/get_all_followers/${sessionId}`),
+      fetch('/get_all_posts_by_user/' + sessionId),
     ])
     .then(responses => Promise.all(responses.map(response => response.json())))
     .then(data => {
@@ -67,7 +67,7 @@ const EditPost = (props) => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get_one_post/${postId}`)
+    fetch(`/get_one_post/${postId}`)
     .then(response => response.json())
     .then(data => {
       setPostInfo(data)
@@ -85,7 +85,7 @@ const EditPost = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    fetch("http://127.0.0.1:5000/update_post/" + postId, {
+    fetch("/update_post/" + postId, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

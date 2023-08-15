@@ -5,7 +5,7 @@ const LikeButton = (props) => {
 
     const addLikeHandler = (e) => {
         e.preventDefault()
-        fetch(`http://127.0.0.1:5000/create_like/${sessionId}/${post.id}`, {
+        fetch(`/create_like/${sessionId}/${post.id}`, {
             method: "POST"
         })
         .then(response => response.json())
@@ -24,7 +24,7 @@ const LikeButton = (props) => {
 
     const deleteLikeHandler = (e) => {
         e.preventDefault()
-        fetch(`http://127.0.0.1:5000/delete_like/${sessionId}/${post.id}`, { 
+        fetch(`/delete_like/${sessionId}/${post.id}`, { 
             method: "DELETE"
         })
         .then(response => response.json())

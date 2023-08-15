@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Reg from './components/Reg';
 import Log from './components/Log';
 import Dashboard from './views/Dashboard';
@@ -9,6 +9,8 @@ import Cookies from 'js-cookie';
 import EditProfile from './components/EditProfile';
 import EditPost from './components/EditPost';
 import ViewPost from './components/ViewPost';
+import NotFound from './components/NotFound';
+import { useNavigate } from 'react-router-dom';
 
 
 function App() {
@@ -32,7 +34,6 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
         <Route path="/register" element={<Reg sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/login" element={<Log sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/dashboard/:sessionId" element={<Dashboard sessionId={sessionId} setSessionId={setSessionId}/>} />
@@ -40,6 +41,9 @@ function App() {
         <Route path="/profile/edit/:sessiodId" element={<EditProfile sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/post/edit/:postId" element={<EditPost sessionId={sessionId} setSessionId={setSessionId}/>} />
         <Route path="/post/view/:postId/:userId" element={<ViewPost sessionId={sessionId} setSessionId={setSessionId}/>} />
+        {/* Add a default route */}
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

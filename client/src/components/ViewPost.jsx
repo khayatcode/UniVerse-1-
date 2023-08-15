@@ -33,21 +33,21 @@ const ViewPost = (props) => {
   const { userId } = useParams()
 
   useEffect(() => {
-    const userSession = Cookies.get('sessionId');
-    if (!userSession) {
-      navigate('/login');
-    }
+    if (Cookies.get('sessionId') == "") {
+      console.log("redirecting to login")
+      return navigate('/login')
+  }
 
     Promise.all([
-      fetch(`http://127.0.0.1:5000/get_user/${userId}`),
-      fetch(`http://127.0.0.1:5000/get_one_post/${postId}`),
-      fetch(`http://127.0.0.1:5000//get_all_comments_for_post/${postId}`),
-      fetch(`http://127.0.0.1:5000/get_all_follows/${userId}`),
-      fetch(`http://127.0.0.1:5000/get_all_followers/${userId}`),
-      fetch(`http://127.0.0.1:5000/get_all_follows/${sessionId}`),
-      fetch(`http://127.0.0.1:5000/get_all_users_like_post/${sessionId}`),
-      fetch(`http://127.0.0.1:5000/get_user/${sessionId}`),
-      fetch('http://127.0.0.1:5000/get_all_posts_by_user/' + userId),
+      fetch(`/get_user/${userId}`),
+      fetch(`/get_one_post/${postId}`),
+      fetch(`//get_all_comments_for_post/${postId}`),
+      fetch(`/get_all_follows/${userId}`),
+      fetch(`/get_all_followers/${userId}`),
+      fetch(`/get_all_follows/${sessionId}`),
+      fetch(`/get_all_users_like_post/${sessionId}`),
+      fetch(`/get_user/${sessionId}`),
+      fetch('/get_all_posts_by_user/' + userId),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(data => {
@@ -69,7 +69,7 @@ const ViewPost = (props) => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get_all_followers/${userId}`)
+    fetch(`/get_all_followers/${userId}`)
       .then(response => response.json())
       .then(data => {
         setAllFollowers(data)
@@ -80,7 +80,7 @@ const ViewPost = (props) => {
   }, [loggedInUserFollows])
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get_one_post/${postId}`)
+    fetch(`/get_one_post/${postId}`)
       .then(response => response.json())
       .then(data => {
         setPostInfo(data)

@@ -17,6 +17,12 @@ const Log = (props) => {
     console.log("session id: ", sessionId)
 
     // do something that if session id still exists remove it
+    useEffect(() => {
+        if (sessionId) {
+            Cookies.remove("sessionId")
+            setSessionId(null)
+        }
+    }, [])
 
     const changeHandler = (e) => {
         setUserInfo({
@@ -26,7 +32,8 @@ const Log = (props) => {
     }
     const submitLog = (e) => {
         e.preventDefault()
-        fetch("http://127.0.0.1:5000/login", {
+        
+        fetch("/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -43,6 +50,7 @@ const Log = (props) => {
                     })
                     setErrors({})
                     setSessionId(data.user.id)
+                    Cookies.set("sessionId", data.user.id)
                     navigate("/dashboard/" + data.user.id)
                 } else {
                     setErrors(data.message)

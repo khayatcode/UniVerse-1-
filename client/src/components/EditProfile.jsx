@@ -29,11 +29,11 @@ const EditProfile = (props) => {
     }
 
     useEffect(() => {
-        const userSession = Cookies.get('sessionId');
-        if (!userSession) {
-            navigate('/login');
+        if (Cookies.get('sessionId') == "") {
+            console.log("redirecting to login")
+            return navigate('/login')
         }
-        fetch(`http://127.0.0.1:5000/get_user/${sessionId}`)
+        fetch(`/get_user/${sessionId}`)
             .then(response => response.json())
             .then(data => {
                 console.log("data in get_user", data)
@@ -48,7 +48,7 @@ const EditProfile = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        fetch("http://127.0.0.1:5000/update_user/" + sessionId, {
+        fetch("/update_user/" + sessionId, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

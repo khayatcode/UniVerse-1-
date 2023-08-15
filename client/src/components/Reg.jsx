@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import MilkyWay from '../images/milkyWay.jpeg'
+import Cookies from "js-cookie";
 
 
 // Create a Registration Form Component using Bootstrap that will allow users to put in their first_name, last_name, user_name, location, occupation, email, password, and confirm_password.
@@ -61,7 +62,7 @@ const Reg = (props) => {
         formData.append("profile_pic", userInfo.profile_pic);
         console.log("profile_pic", userInfo.profile_pic);
 
-        fetch("http://127.0.0.1:5000/register", {
+        fetch("/register", {
             method: "POST",
             body: formData,
         })
@@ -84,6 +85,7 @@ const Reg = (props) => {
                     });
                     setErrors({});
                     setSessionId(data.user_id);
+                    Cookies.set("sessionId", data.user_id);
                     // console.log("User has been registered")
                     navigate("/dashboard/" + data.user_id);
                     // Display success message here

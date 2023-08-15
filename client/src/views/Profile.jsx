@@ -36,17 +36,17 @@ const Profile = (props) => {
     console.log("user id", userId)
 
  useEffect(() => {
-    const userSession = Cookies.get('sessionId');
-    if (!userSession) {
-        navigate('/login');
+    if (Cookies.get('sessionId') == "") {
+        console.log("redirecting to login")
+        return navigate('/login')
     }
   Promise.all([
-    fetch(`http://127.0.0.1:5000/get_user/${userId}`),
-    fetch('http://127.0.0.1:5000/get_all_posts_by_user/' + userId),
-    fetch(`http://127.0.0.1:5000/get_all_follows/${userId}`),
-    fetch(`http://127.0.0.1:5000/get_all_follows/${sessionId}`),
-    fetch(`http://127.0.0.1:5000/get_all_followers/${userId}`),
-    fetch(`http://127.0.0.1:5000/get_all_users_like_post/${sessionId}`),
+    fetch(`/get_user/${userId}`),
+    fetch('/get_all_posts_by_user/' + userId),
+    fetch(`/get_all_follows/${userId}`),
+    fetch(`/get_all_follows/${sessionId}`),
+    fetch(`/get_all_followers/${userId}`),
+    fetch(`/get_all_users_like_post/${sessionId}`),
   ])
   .then(responses => Promise.all(responses.map(response => response.json())))
   .then(data => {
@@ -67,8 +67,8 @@ const Profile = (props) => {
     // create a useEffect, everytime you setLoggedInUserFollows, you update the state of allFollowers
     useEffect(() => {
         Promise.all([
-            fetch(`http://127.0.0.1:5000/get_all_followers/${userId}`),
-            fetch(`http://127.0.0.1:5000/get_all_follows/${userId}`)
+            fetch(`/get_all_followers/${userId}`),
+            fetch(`/get_all_follows/${userId}`)
         ])
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(data => {
@@ -80,7 +80,7 @@ const Profile = (props) => {
     }, [loggedInUserFollows])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/get_all_posts_by_user/' + userId)
+        fetch('/get_all_posts_by_user/' + userId)
         .then(response => response.json())
         .then(data => {
             setAllPosts(data)

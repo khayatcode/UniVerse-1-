@@ -32,7 +32,7 @@ const CreatePost = (props) => {
         formData.append('likes', postInfo.likes)
         formData.append('user_id', postInfo.user_id)
         formData.append('creator', postInfo.creator)
-        fetch("http://127.0.0.1:5000/create_post", {
+        fetch("/create_post", {
             method: "POST",
             body: formData
         })
